@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace = "com.lin.voltrfremoteadaptorandroid"
-    compileSdk = 34
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.lin.voltrfremoteadaptorandroid"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
@@ -39,4 +39,6 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    implementation ("com.github.mik3y:usb-serial-for-android:3.7.0")
+    implementation ("androidx.viewpager2:viewpager2:1.0.0")
 }
