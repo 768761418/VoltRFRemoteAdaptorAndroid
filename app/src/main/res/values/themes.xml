@@ -3,7 +3,12 @@
     <style name="Base.Theme.VoltRFRemoteAdaptorAndroid" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
     </style>
 
-    <style name="Theme.VoltRFRemoteAdaptorAndroid" parent="Base.Theme.VoltRFRemoteAdaptorAndroid" />
+    <style name="Theme.VoltRFRemoteAdaptorAndroid" parent="Base.Theme.VoltRFRemoteAdaptorAndroid" >
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
 </resources>

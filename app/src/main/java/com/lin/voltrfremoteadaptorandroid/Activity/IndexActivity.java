@@ -2,25 +2,20 @@ package com.lin.voltrfremoteadaptorandroid.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.transition.Fade;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.hardware.usb.UsbManager;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.lin.voltrfremoteadaptorandroid.Adapter.FgmAdapter;
+import com.lin.voltrfremoteadaptorandroid.module.TopBarModule;
 import com.lin.voltrfremoteadaptorandroid.R;
 import com.lin.voltrfremoteadaptorandroid.Receiver.SerialReceiver;
 import com.lin.voltrfremoteadaptorandroid.Utils.PermissionUtils;
@@ -32,8 +27,8 @@ public class IndexActivity extends AppCompatActivity {
     private String TAG = "IndexActivity";
     private PermissionUtils permissionUtils = new PermissionUtils();
     private SerialReceiver serialReceiver;
-    FragmentManager fragmentManager;
-    FragmentTransaction fragmentTransaction;
+    private TopBarModule topBarModule;
+
 
 
     private List<Fragment> fragments = new ArrayList<>();
@@ -87,6 +82,9 @@ public class IndexActivity extends AppCompatActivity {
     }
 
     private  void initFgmData(){
+//        初始化顶部栏
+        topBarModule= findViewById(R.id.index_top_bar);
+        topBarModule.currentIndexForTop(IndexActivity.this,0,getString(R.string.Rgb_title));
         serialReceiver = new SerialReceiver();
 //        绑定viewpager和切换栏
         viewPager2 = findViewById(R.id.index_viewPager);
@@ -106,7 +104,24 @@ public class IndexActivity extends AppCompatActivity {
             }
         }).attach();
 
-        viewPager2.setUserInputEnabled(false);
+//        监听界面切换获取索引来修改顶部栏内容
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+//                0:rgb界面
+//                1：cw界面
+                if (position == 0 ){
+                    topBarModule.currentIndexForTop(IndexActivity.this,0,getString(R.string.Rgb_title));
+                }else if (position == 1){
+                    topBarModule.currentIndexForTop(IndexActivity.this,0,getString(R.string.Cw_title));
+                }
+
+            }
+
+        });
+
+        viewPager2.setUserInputEnabled(true);
 
 
 
