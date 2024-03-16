@@ -19,14 +19,14 @@ public class OtgReceiver extends BroadcastReceiver {
         Log.d(TAG, "8484848");
         String action = intent.getAction();
 //        监听OTG插入
-        if (UsbManager.ACTION_USB_ACCESSORY_ATTACHED.equals(action)){
+        if (UsbManager.ACTION_USB_DEVICE_ATTACHED.equals(action)){
             boolean openOTG = findOTG(context);
             if (openOTG){
                 Log.d(TAG, "OTG connect success");
             }else{
                 Log.d(TAG, "OTG connect fail");
             }
-        }else if(UsbManager.ACTION_USB_ACCESSORY_DETACHED.equals(action)){
+        }else if(UsbManager.ACTION_USB_DEVICE_DETACHED.equals(action)){
             Log.d(TAG, "onReceive: ---");
             Toast.makeText(context.getApplicationContext(), "端开了", Toast.LENGTH_SHORT).show();
         }

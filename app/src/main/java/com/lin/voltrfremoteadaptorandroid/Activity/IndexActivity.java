@@ -64,7 +64,8 @@ public class IndexActivity extends AppCompatActivity {
         initFgmData();
         registerSerialReceiver();
 
-        this.registerReceiver(otgReceiver,filter);
+        registerReceiver(otgReceiver,filter);
+//        this.unregisterReceiver(otgReceiver);
         int status = otgReceiver.getResultCode();
 
 
@@ -117,15 +118,12 @@ public class IndexActivity extends AppCompatActivity {
 
     private void registerSerialReceiver() {
         otgReceiver = new OtgReceiver();
-        filter = new IntentFilter();
-        filter.addAction(UsbManager.ACTION_USB_ACCESSORY_ATTACHED);
-        filter.addAction(UsbManager.ACTION_USB_ACCESSORY_DETACHED);
-
+        filter = new IntentFilter("com.android.usb.USB_PERMISSION");
+        filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
+        filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
     }
 
-    private void unregisterSerialReceiver() {
 
-    }
 
 }
 
