@@ -18,7 +18,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.PopupWindow;
 import com.lin.voltrfremoteadaptorandroid.R;
 import com.lin.voltrfremoteadaptorandroid.databinding.FragmentRgbBinding;
-
+import com.lin.voltrfremoteadaptorandroid.module.ColorChooseModule;
 
 
 /**
@@ -85,42 +85,27 @@ public class RgbFragment extends Fragment {
         // Inflate the layout for this fragment
        fragmentRgbBinding = fragmentRgbBinding.inflate(inflater,container,false);
 
+
        fragmentRgbBinding.test.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               changeColorDefault(1);
+
+               ColorChooseModule colorChooseModule = new ColorChooseModule(getContext());
+
                Log.d("rgb", "wsl ");
+               colorChooseModule.show();
+               colorChooseModule.setCancelOnclickListener(new ColorChooseModule.CancelOnclickListener() {
+                   @Override
+                   public void onCancelOnclickListener() {
+                       colorChooseModule.dismiss();
+                   }
+               });
            }
        });
 
        return fragmentRgbBinding.getRoot();
     }
 
-
-    private void changeColorDefault(int currentIndex){
-        if (popupWindow == null){
-            popupView = View.inflate(requireContext(),R.layout.module_color_default,null);
-            popupWindow = new PopupWindow(popupView, WindowManager.LayoutParams.MATCH_PARENT,
-                    WindowManager.LayoutParams.WRAP_CONTENT);
-//            // 设置背景图片， 必须设置，不然动画没作用
-//            popupWindow.setBackgroundDrawable(new BitmapDrawable());
-//            popupWindow.setFocusable(true);
-            // 设置点击popupwindow外屏幕其它地方消失
-            popupWindow.setOutsideTouchable(true);
-//            // 平移动画相对于手机屏幕的底部开始，X轴不变，Y轴从1变0
-//            animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 0,
-//                    Animation.RELATIVE_TO_PARENT, 1, Animation.RELATIVE_TO_PARENT, 0);
-//            animation.setInterpolator(new AccelerateInterpolator());
-//            animation.setDuration(200);
-
-            // 设置popupWindow的显示位置，此处是在手机屏幕底部且水平居中的位置
-            popupWindow.showAtLocation(getActivity().findViewById(R.id.setting), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-//            popupView.startAnimation(animation);
-
-            // 将生成的视图设置给popupWindow
-            popupWindow.setContentView(popupView);
-        }
-    }
 
 
 }
