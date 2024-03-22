@@ -85,8 +85,8 @@ public class IndexActivity extends AppCompatActivity {
         viewPager2.setAdapter(fgmAdapter);
         fragments.add(RgbFragment.newInstance("RGB","1"));
         fragments.add(CwFragment.newInstance("CW","2"));
-        tabLayoutData.add("1");
-        tabLayoutData.add("2");
+        tabLayoutData.add("RGB");
+        tabLayoutData.add("CW");
 
 //        绑定tabLayout和viewpager2，实现点击切换
         new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {

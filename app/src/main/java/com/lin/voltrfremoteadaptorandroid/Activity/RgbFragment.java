@@ -86,22 +86,7 @@ public class RgbFragment extends Fragment {
        fragmentRgbBinding = fragmentRgbBinding.inflate(inflater,container,false);
 
 
-       fragmentRgbBinding.test.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
 
-               ColorChooseModule colorChooseModule = new ColorChooseModule(getContext());
-
-               Log.d("rgb", "wsl ");
-               colorChooseModule.show();
-               colorChooseModule.setCancelOnclickListener(new ColorChooseModule.CancelOnclickListener() {
-                   @Override
-                   public void onCancelOnclickListener() {
-                       colorChooseModule.dismiss();
-                   }
-               });
-           }
-       });
 
        return fragmentRgbBinding.getRoot();
     }

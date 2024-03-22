@@ -2,4 +2,11 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="top">#2C2B2C</color>
+    <color name="bg">#191819</color>
+    <color name="tab">#343338</color>
+    <color name="text">#FFDC74</color>
+    <color name="tab_select">#FFDC74</color>
+    <color name="tab_select_text">#FF000000</color>
+
 </resources>

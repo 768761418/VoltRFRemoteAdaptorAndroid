@@ -19,6 +19,7 @@ public class TopBarModule extends LinearLayout {
 
     ModuleTopBarBinding moduleTopBarBinding;
     private OnComeBackOnClickListener onComeBackOnClickListener;
+    private int switchStatus = 0;
 
 
     public interface OnComeBackOnClickListener{
@@ -49,9 +50,18 @@ public class TopBarModule extends LinearLayout {
 //            设置标题
             moduleTopBarBinding.titleRgbAndCw.setText(title);
 //            开关绑定事件
+//            0为关闭状态
+//            1为开启状态
             moduleTopBarBinding.rgbAndCwSwitch.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if (switchStatus == 0){
+                        switchStatus = 1;
+                        moduleTopBarBinding.rgbAndCwSwitch.setImageResource(R.drawable.icon_switch_on);
+                    } else if (switchStatus ==1 ) {
+                        switchStatus = 0;
+                        moduleTopBarBinding.rgbAndCwSwitch.setImageResource(R.drawable.icon_switch_off);
+                    }
 
                 }
             });

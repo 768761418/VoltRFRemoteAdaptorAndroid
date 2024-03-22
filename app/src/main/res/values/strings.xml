@@ -5,4 +5,6 @@
     <string name="Rgb_title">RGB</string>
     <string name="Cw_title">CW</string>
     <string name="Remote_title">Remote Controller</string>
+
+    <string name="Luminance">Luminance</string>
 </resources>

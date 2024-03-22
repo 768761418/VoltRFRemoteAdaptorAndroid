@@ -8,7 +8,7 @@
 
     <style name="Theme.VoltRFRemoteAdaptorAndroid" parent="Base.Theme.VoltRFRemoteAdaptorAndroid" >
 <!--        设置状态栏颜色-->
-        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorPrimaryDark">@color/top</item>
     </style>
 
 </resources>
