@@ -1,10 +1,22 @@
 <resources>
     <string name="app_name">Volt RF Remote Adaptor</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     
     <string name="Rgb_title">RGB</string>
     <string name="Cw_title">CW</string>
     <string name="Remote_title">Remote Controller</string>
 
     <string name="Luminance">Luminance</string>
+    <string name="Zone">Zone</string>
+
+
+    <string name="zone1">zone1</string>
+    <string name="zone2">zone2</string>
+    <string name="zone3">zone3</string>
+    <string name="zone4">zone4</string>
+    <string name="zone5">zone5</string>
+    <string name="zone6">zone6</string>
+
+    <string name="luminance_25">25%</string>
+    <string name="luminance_50">50%</string>
+    <string name="luminance_75">75%</string>
 </resources>

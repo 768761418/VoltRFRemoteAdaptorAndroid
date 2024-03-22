@@ -19,15 +19,8 @@
                tools:ignore="MissingConstraints"
                app:layout_constraintTop_toTopOf="parent"/>
 
-
-            <TextView
-                android:id="@+id/setting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/hello_blank_fragment"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"/>
+          <include layout="@layout/module_luminance_zone"
+              app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
 </layout>

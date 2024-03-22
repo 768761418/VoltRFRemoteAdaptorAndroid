@@ -15,6 +15,8 @@
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints"
         app:layout_constraintTop_toTopOf="parent"/>
+    <include layout="@layout/module_luminance_zone"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
