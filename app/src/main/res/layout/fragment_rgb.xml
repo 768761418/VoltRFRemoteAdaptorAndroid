@@ -12,15 +12,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
+        <include layout="@layout/module_luminance_zone"
+            app:layout_constraintTop_toBottomOf="@id/all_on_off"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
            <com.lin.voltrfremoteadaptorandroid.module.AllOnOffModule
+               android:id="@+id/all_on_off"
                android:layout_width="match_parent"
-               android:layout_height="wrap_content"
+               android:layout_height="0dp"
                tools:ignore="MissingConstraints"
-               app:layout_constraintTop_toTopOf="parent"/>
+               app:layout_constraintTop_toTopOf="parent"
+               />
 
-          <include layout="@layout/module_luminance_zone"
-              app:layout_constraintBottom_toBottomOf="parent"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
 </layout>

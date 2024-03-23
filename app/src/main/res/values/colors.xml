@@ -9,4 +9,5 @@
     <color name="tab_select">#FFDC74</color>
     <color name="tab_select_text">#FF000000</color>
 
+    <color name="bg_luminance_zone">#343338</color>
 </resources>

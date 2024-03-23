@@ -7,7 +7,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/black">
+    android:background="@drawable/bg_luminance_zone_module">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -40,6 +40,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:text="@string/Zone"
+                android:textColor="@color/white"
                 app:layout_constraintLeft_toRightOf="@+id/zone_icon"
                 android:layout_gravity="center"
                 tools:ignore="MissingConstraints"

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.SeekBar;
 
 import androidx.annotation.NonNull;
@@ -26,6 +27,7 @@ public class LuminanceModule extends ConstraintLayout {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         moduleLuminanceBinding = DataBindingUtil.inflate(layoutInflater,R.layout.module_luminance,this,true);
         setSeekBar();
+        btnClick();
     }
 
     private void setSeekBar(){
@@ -53,4 +55,32 @@ public class LuminanceModule extends ConstraintLayout {
             }
         });
     }
+
+    private void btnClick(){
+        moduleLuminanceBinding.luminance25.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                moduleLuminanceBinding.luminanceSeekbar.setProgress((int)(255*0.25),true);
+                moduleLuminanceBinding.luminanceCurrentProgress.setText("25%");
+            }
+        });
+
+        moduleLuminanceBinding.luminance50.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                moduleLuminanceBinding.luminanceSeekbar.setProgress((int)(255*0.5),true);
+                moduleLuminanceBinding.luminanceCurrentProgress.setText("50%");
+            }
+        });
+
+        moduleLuminanceBinding.luminance75.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                moduleLuminanceBinding.luminanceSeekbar.setProgress((int)(255*0.75),true);
+                moduleLuminanceBinding.luminanceCurrentProgress.setText("75%");
+            }
+        });
+    }
+
 }
