@@ -6,19 +6,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Activity.CwFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-     android:layout_height="match_parent">
-    <com.lin.voltrfremoteadaptorandroid.module.AllOnOffModule
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints"
-        app:layout_constraintTop_toTopOf="parent"/>
-    <include layout="@layout/module_luminance_zone"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+         android:layout_height="match_parent"
+        android:background="#00FFFFFF">
+        <com.lin.voltrfremoteadaptorandroid.view.AllOnOffModule
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints"
+            app:layout_constraintTop_toTopOf="parent"/>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

@@ -10,4 +10,12 @@
     <color name="tab_select_text">#FF000000</color>
 
     <color name="bg_luminance_zone">#343338</color>
+
+
+    <color name="presuppose1">#f8b04b</color>
+    <color name="presuppose2">#f76036</color>
+    <color name="presuppose3">#fadd60</color>
+    <color name="presuppose4">#90fb6d</color>
+    <color name="presuppose5">#6afbc1</color>
+    <color name="presuppose6">#ffffff</color>
 </resources>

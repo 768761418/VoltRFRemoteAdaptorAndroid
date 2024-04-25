@@ -6,11 +6,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import com.lin.voltrfremoteadaptorandroid.module.TopBarModule;
 import com.lin.voltrfremoteadaptorandroid.R;
 import com.lin.voltrfremoteadaptorandroid.databinding.LayoutRemoteBinding;
 
-public class RemoteActivity extends AppCompatActivity {
+public class RemoteActivity extends BaseActivity {
     LayoutRemoteBinding layoutRemoteBinding;
 
     @Override

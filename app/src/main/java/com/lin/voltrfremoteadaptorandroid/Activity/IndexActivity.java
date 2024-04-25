@@ -1,14 +1,15 @@
 package com.lin.voltrfremoteadaptorandroid.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,7 +17,8 @@ import android.util.Log;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.lin.voltrfremoteadaptorandroid.Adapter.FgmAdapter;
-import com.lin.voltrfremoteadaptorandroid.module.TopBarModule;
+import com.lin.voltrfremoteadaptorandroid.setting.ApplicationSetting;
+import com.lin.voltrfremoteadaptorandroid.view.TopBarModule;
 import com.lin.voltrfremoteadaptorandroid.R;
 import com.lin.voltrfremoteadaptorandroid.Receiver.OtgReceiver;
 import com.lin.voltrfremoteadaptorandroid.Utils.PermissionUtils;
@@ -24,7 +26,7 @@ import com.lin.voltrfremoteadaptorandroid.Utils.PermissionUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IndexActivity extends AppCompatActivity {
+public class IndexActivity extends BaseActivity {
     private String TAG = "IndexActivity";
     private PermissionUtils permissionUtils = new PermissionUtils();
     private OtgReceiver otgReceiver;
@@ -34,6 +36,8 @@ public class IndexActivity extends AppCompatActivity {
     private List<String> tabLayoutData = new ArrayList<>();
     private ViewPager2 viewPager2;
     private TabLayout tabLayout;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
 
     @Override
@@ -58,17 +62,38 @@ public class IndexActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.layout_index);
+        sharedPreferences = getSharedPreferences(ApplicationSetting.sharedPreferencesFileName,MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+//        如果初次使用,就用初始化颜色
+        Boolean isFirstTime = sharedPreferences.getBoolean("isFirstTime",true);
+        if (isFirstTime){
+            // 将颜色值存储到 SharedPreferences 中
+            int presuppose[] = {
+                    getColor(R.color.presuppose1),
+                    getColor(R.color.presuppose2),
+                    getColor(R.color.presuppose3),
+                    getColor(R.color.presuppose4),
+                    getColor(R.color.presuppose5),
+                    getColor(R.color.presuppose6)
+            };
+            String presupposeName = "presuppose";
+            for(int i= 0;i<presuppose.length;i++){
+                editor.putInt(presupposeName+(i+1), presuppose[i]);
+            }
+
+            editor.putBoolean("isFirstTime",false);
+            editor.apply();
+        }else{
+
+        }
 
         permissionUtils.checkPermission(this);
 
         initFgmData();
         registerSerialReceiver();
-
         registerReceiver(otgReceiver,filter);
 //        this.unregisterReceiver(otgReceiver);
         int status = otgReceiver.getResultCode();
-
-
         Log.d(TAG, "注册了" + status);
 
     }
@@ -110,7 +135,8 @@ public class IndexActivity extends AppCompatActivity {
                 }
             }
         });
-        viewPager2.setUserInputEnabled(true);
+//        不允许滑动切换
+        viewPager2.setUserInputEnabled(false);
     }
 
 

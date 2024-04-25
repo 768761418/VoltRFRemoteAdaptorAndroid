@@ -11,18 +11,93 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <com.lin.voltrfremoteadaptorandroid.view.ColorPickerView
+            android:id="@+id/rgb_color_picker"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            tools:ignore="MissingConstraints"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rgb_top"
+            android:layout_marginTop="5dp"/>
 
-        <include layout="@layout/module_luminance_zone"
-            app:layout_constraintTop_toBottomOf="@id/all_on_off"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
-           <com.lin.voltrfremoteadaptorandroid.module.AllOnOffModule
-               android:id="@+id/all_on_off"
+
+        <com.lin.voltrfremoteadaptorandroid.view.AllOnOffModule
+               android:id="@+id/rgb_top"
                android:layout_width="match_parent"
-               android:layout_height="0dp"
+               android:layout_height="wrap_content"
                tools:ignore="MissingConstraints"
-               app:layout_constraintTop_toTopOf="parent"
-               />
+               app:layout_constraintTop_toTopOf="parent" />
+
+
+        <GridLayout
+            android:id="@+id/rgb_color_presuppose"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:layout_constraintTop_toBottomOf="@id/rgb_color_picker"
+            android:layout_marginTop="20dp"
+            android:alignmentMode="alignMargins"
+            android:columnCount="7"
+            android:rowCount="1"
+            android:columnOrderPreserved="true">
+            <ImageView
+                android:id="@+id/rgb_presuppose1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/color_circle_bg"
+                android:layout_columnWeight="1"
+                android:layout_gravity="center"
+                />
+            <ImageView
+                android:id="@+id/rgb_presuppose2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/color_circle_bg"
+                android:layout_columnWeight="1"
+                android:layout_gravity="center"
+                />
+            <ImageView
+                android:id="@+id/rgb_presuppose3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/color_circle_bg"
+                android:layout_columnWeight="1"
+                android:layout_gravity="center"
+                />
+            <ImageView
+                android:id="@+id/rgb_presuppose4"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/color_circle_bg"
+                android:layout_columnWeight="1"
+                android:layout_gravity="center"
+                />
+            <ImageView
+                android:id="@+id/rgb_presuppose5"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/color_circle_bg"
+                android:layout_columnWeight="1"
+                android:layout_gravity="center"
+                />
+            <ImageView
+                android:id="@+id/rgb_presuppose6"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/color_quadrate_bg"
+                android:layout_columnWeight="2"
+                android:layout_gravity="center"
+                />
+
+        </GridLayout>
+
+        <com.lin.voltrfremoteadaptorandroid.view.LuminanceAndZoneModule
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/rgb_color_presuppose"
+            android:layout_marginTop="20dp"
+            tools:ignore="MissingConstraints" />
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

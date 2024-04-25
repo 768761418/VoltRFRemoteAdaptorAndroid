@@ -1,10 +1,9 @@
-package com.lin.voltrfremoteadaptorandroid.module;
+package com.lin.voltrfremoteadaptorandroid.view;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -15,12 +14,12 @@ import androidx.annotation.NonNull;
 
 import com.lin.voltrfremoteadaptorandroid.R;
 
-public class ColorChooseModule extends Dialog {
+public class ColorChooseDialog extends Dialog {
     ImageView cancel,done;
     CancelOnclickListener cancelOnclickListener;
     DoneOnclickListener doneOnclickListener;
 
-    public ColorChooseModule(@NonNull Context context) {
+    public ColorChooseDialog(@NonNull Context context) {
         super(context);
     }
     public interface CancelOnclickListener{
@@ -33,7 +32,7 @@ public class ColorChooseModule extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.module_color_choose);
+        setContentView(R.layout.dialog_color_choose);
         initUi();
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +61,7 @@ public class ColorChooseModule extends Dialog {
         getWindow().setWindowAnimations(R.style.dialog_animation);
         // 设置对话框的宽度
         Window window = getWindow();
-// 把 DecorView 的默认 padding 取消，同时 DecorView 的默认大小也会取消
+        // 把 DecorView 的默认 padding 取消，同时 DecorView 的默认大小也会取消
         window.getDecorView().setPadding(0, 0, 0, 0);
         WindowManager.LayoutParams layoutParams = window.getAttributes();
 // 设置宽度

@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg">
-    <com.lin.voltrfremoteadaptorandroid.module.TopBarModule
+    <com.lin.voltrfremoteadaptorandroid.view.TopBarModule
         android:id="@+id/remote_top_bar"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -30,12 +30,12 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             tools:ignore="MissingConstraints">
-        <com.lin.voltrfremoteadaptorandroid.module.AllOnOffModule
-            android:id="@+id/all_on_off"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            tools:ignore="MissingConstraints"
-            />
+            <com.lin.voltrfremoteadaptorandroid.view.AllOnOffModule
+                android:id="@+id/all_on_off"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                tools:ignore="MissingConstraints"
+                />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.lin.voltrfremoteadaptorandroid.module;
+package com.lin.voltrfremoteadaptorandroid.view;
 
 import android.app.Activity;
 import android.content.Context;
