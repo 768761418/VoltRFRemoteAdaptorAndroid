@@ -18,10 +18,12 @@ public class ColorChooseDialog extends Dialog {
     ImageView cancel,done;
     CancelOnclickListener cancelOnclickListener;
     DoneOnclickListener doneOnclickListener;
+    int color;
 
     public ColorChooseDialog(@NonNull Context context) {
         super(context);
     }
+
     public interface CancelOnclickListener{
         void onCancelOnclickListener();
     }
@@ -29,17 +31,24 @@ public class ColorChooseDialog extends Dialog {
         void onDoneOnclickListener();
     }
 
+    public void setColor(int color){
+        this.color =color;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_color_choose);
         initUi();
+        ColorPickerView colorPickerView = findViewById(R.id.dialog_color_picker);
+        colorPickerView.externalChangePresuppose(color);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (cancelOnclickListener != null){
                     cancelOnclickListener.onCancelOnclickListener();
                 }
+                dismiss();
             }
         });
 
@@ -49,6 +58,7 @@ public class ColorChooseDialog extends Dialog {
                 if (doneOnclickListener != null){
                     doneOnclickListener.onDoneOnclickListener();
                 }
+                dismiss();
             }
         });
     }
@@ -64,11 +74,11 @@ public class ColorChooseDialog extends Dialog {
         // 把 DecorView 的默认 padding 取消，同时 DecorView 的默认大小也会取消
         window.getDecorView().setPadding(0, 0, 0, 0);
         WindowManager.LayoutParams layoutParams = window.getAttributes();
-// 设置宽度
+        // 设置宽度
         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
         window.setGravity(Gravity.BOTTOM);
         window.setAttributes(layoutParams);
-// 给 DecorView 设置背景颜色，很重要，不然导致 Dialog 内容显示不全，有一部分内容会充当 padding，上面例子有举出
+        // 给 DecorView 设置背景颜色，很重要，不然导致 Dialog 内容显示不全，有一部分内容会充当 padding，上面例子有举出
         window.getDecorView().setBackgroundColor(Color.WHITE);
         window.setAttributes(layoutParams);
     }

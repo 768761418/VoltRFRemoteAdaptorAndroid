@@ -13,11 +13,14 @@ import android.graphics.Color;
 import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.lin.voltrfremoteadaptorandroid.Adapter.FgmAdapter;
+import com.lin.voltrfremoteadaptorandroid.Utils.SharedPreferencesUtils;
 import com.lin.voltrfremoteadaptorandroid.setting.ApplicationSetting;
+import com.lin.voltrfremoteadaptorandroid.setting.ColorSetting;
 import com.lin.voltrfremoteadaptorandroid.view.TopBarModule;
 import com.lin.voltrfremoteadaptorandroid.R;
 import com.lin.voltrfremoteadaptorandroid.Receiver.OtgReceiver;
@@ -28,17 +31,15 @@ import java.util.List;
 
 public class IndexActivity extends BaseActivity {
     private String TAG = "IndexActivity";
-    private PermissionUtils permissionUtils = new PermissionUtils();
+    private PermissionUtils permissionUtils;
     private OtgReceiver otgReceiver;
-    IntentFilter filter;
+    private IntentFilter filter;
     private TopBarModule topBarModule;
     private List<Fragment> fragments = new ArrayList<>();
     private List<String> tabLayoutData = new ArrayList<>();
     private ViewPager2 viewPager2;
     private TabLayout tabLayout;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
-
+    private SharedPreferencesUtils sharedPreferencesUtils;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -47,7 +48,8 @@ public class IndexActivity extends BaseActivity {
             for (int i = 0; i < grantResults.length; i++) {
 //                如果没请求成功，在这写
                 if (grantResults[i] != PackageManager.PERMISSION_GRANTED){
-
+//                    弹出提示
+                    Toast.makeText(IndexActivity.this, "Please grant sufficient permissions to ensure the proper functioning of the app", Toast.LENGTH_SHORT).show();
                 }
 //                如果请求成功在这写
                 else {
@@ -60,39 +62,18 @@ public class IndexActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.layout_index);
-        sharedPreferences = getSharedPreferences(ApplicationSetting.sharedPreferencesFileName,MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-//        如果初次使用,就用初始化颜色
-        Boolean isFirstTime = sharedPreferences.getBoolean("isFirstTime",true);
-        if (isFirstTime){
-            // 将颜色值存储到 SharedPreferences 中
-            int presuppose[] = {
-                    getColor(R.color.presuppose1),
-                    getColor(R.color.presuppose2),
-                    getColor(R.color.presuppose3),
-                    getColor(R.color.presuppose4),
-                    getColor(R.color.presuppose5),
-                    getColor(R.color.presuppose6)
-            };
-            String presupposeName = "presuppose";
-            for(int i= 0;i<presuppose.length;i++){
-                editor.putInt(presupposeName+(i+1), presuppose[i]);
-            }
-
-            editor.putBoolean("isFirstTime",false);
-            editor.apply();
-        }else{
-
-        }
-
+        sharedPreferencesUtils =SharedPreferencesUtils.getInstance(IndexActivity.this);
+        //初始化预设
+        initPresuppose();
+        //获取权限
+        permissionUtils = new PermissionUtils();
         permissionUtils.checkPermission(this);
-
+        //初始化fragement
         initFgmData();
-        registerSerialReceiver();
-        registerReceiver(otgReceiver,filter);
-//        this.unregisterReceiver(otgReceiver);
+        //注册otg广播
+        initSerialReceiver();
+
         int status = otgReceiver.getResultCode();
         Log.d(TAG, "注册了" + status);
 
@@ -140,13 +121,34 @@ public class IndexActivity extends BaseActivity {
     }
 
 
+    private void initPresuppose(){
+        //        如果初次使用,就用初始化颜色
+        Boolean isFirstTime = sharedPreferencesUtils.loadBooleanData("isFirstTime",true);
+        if (isFirstTime){
+            // 将颜色值存储到 SharedPreferences 中
+            int presuppose[] = {
+                    Color.HSVToColor(new float[]{41, ColorSetting.colorS, ColorSetting.colorV}),
+                    Color.HSVToColor(new float[]{24, ColorSetting.colorS, ColorSetting.colorV}),
+                    Color.HSVToColor(new float[]{58, ColorSetting.colorS, ColorSetting.colorV}),
+                    Color.HSVToColor(new float[]{147, ColorSetting.colorS, ColorSetting.colorV}),
+                    Color.HSVToColor(new float[]{178,ColorSetting.colorS, ColorSetting.colorV}),
+                    Color.HSVToColor(new float[]{178, ColorSetting.colorS, ColorSetting.colorV}),
 
+            };
+            String presupposeName = "presuppose";
+            for(int i= 0;i<presuppose.length;i++){
+                sharedPreferencesUtils.saveIntData(presupposeName+(i+1), presuppose[i]);
+            }
+            sharedPreferencesUtils.saveBooleanData("isFirstTime",false);
+        }
+    }
 
-    private void registerSerialReceiver() {
+    private void initSerialReceiver() {
         otgReceiver = new OtgReceiver();
         filter = new IntentFilter("com.android.usb.USB_PERMISSION");
         filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
         filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
+        registerReceiver(otgReceiver,filter);
     }
 
 

@@ -13,6 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.databinding.DataBindingUtil;
 
 import com.lin.voltrfremoteadaptorandroid.R;
+import com.lin.voltrfremoteadaptorandroid.Utils.MessageUtils;
 import com.lin.voltrfremoteadaptorandroid.databinding.ModuleLuminanceAndZoneBinding;
 
 import java.text.DecimalFormat;
@@ -41,7 +42,8 @@ public class LuminanceAndZoneModule extends ConstraintLayout {
                 DecimalFormat decimalFormat = new DecimalFormat("0");
                 String percentageString = decimalFormat.format(percentage);
                 moduleLuminanceAndZoneBinding.luminanceCurrentProgress.setText(percentageString + "%");
-
+//                发信息
+                MessageUtils.sendMessageForSetLuminance(progress);
             }
 
             @Override
@@ -61,15 +63,18 @@ public class LuminanceAndZoneModule extends ConstraintLayout {
         moduleLuminanceAndZoneBinding.luminance25.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                moduleLuminanceAndZoneBinding.luminanceSeekbar.setProgress((int)(255*0.25),true);
+                int progress = (int)(255*0.25);
+                moduleLuminanceAndZoneBinding.luminanceSeekbar.setProgress(progress,true);
                 moduleLuminanceAndZoneBinding.luminanceCurrentProgress.setText("25%");
+
             }
         });
 
         moduleLuminanceAndZoneBinding.luminance50.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                moduleLuminanceAndZoneBinding.luminanceSeekbar.setProgress((int)(255*0.5),true);
+                int progress = (int)(255*0.5);
+                moduleLuminanceAndZoneBinding.luminanceSeekbar.setProgress(progress,true);
                 moduleLuminanceAndZoneBinding.luminanceCurrentProgress.setText("50%");
             }
         });
@@ -77,7 +82,8 @@ public class LuminanceAndZoneModule extends ConstraintLayout {
         moduleLuminanceAndZoneBinding.luminance75.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                moduleLuminanceAndZoneBinding.luminanceSeekbar.setProgress((int)(255*0.75),true);
+                int progress = (int)(255*0.75);
+                moduleLuminanceAndZoneBinding.luminanceSeekbar.setProgress(progress,true);
                 moduleLuminanceAndZoneBinding.luminanceCurrentProgress.setText("75%");
             }
         });
@@ -88,8 +94,45 @@ public class LuminanceAndZoneModule extends ConstraintLayout {
         moduleLuminanceAndZoneBinding.zone1.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: 111");
+                MessageUtils.sendMessageForZone(1);
             }
         });
+
+        moduleLuminanceAndZoneBinding.zone2.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MessageUtils.sendMessageForZone(2);
+            }
+        });
+
+        moduleLuminanceAndZoneBinding.zone3.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MessageUtils.sendMessageForZone(3);
+            }
+        });
+
+        moduleLuminanceAndZoneBinding.zone4.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MessageUtils.sendMessageForZone(4);
+            }
+        });
+
+        moduleLuminanceAndZoneBinding.zone5.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MessageUtils.sendMessageForZone(5);
+            }
+        });
+
+        moduleLuminanceAndZoneBinding.zone6.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MessageUtils.sendMessageForZone(6);
+            }
+        });
+
+
     }
 }

@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.databinding.DataBindingUtil;
 
 import com.lin.voltrfremoteadaptorandroid.R;
+import com.lin.voltrfremoteadaptorandroid.Utils.MessageUtils;
 import com.lin.voltrfremoteadaptorandroid.databinding.ModuleAllOnOffBinding;
 
 
@@ -30,14 +31,14 @@ public class AllOnOffModule extends ConstraintLayout {
       moduleAllOnOffBinding.allOn.setOnClickListener(new OnClickListener() {
           @Override
           public void onClick(View view) {
-              Log.d(TAG, "onClick:on ");
+              MessageUtils.sendMessageForOnOrOff(true);
           }
       });
 
       moduleAllOnOffBinding.allOff.setOnClickListener(new OnClickListener() {
           @Override
           public void onClick(View view) {
-              Log.d(TAG, "onClick:off ");
+             MessageUtils.sendMessageForOnOrOff(false);
           }
       });
     }

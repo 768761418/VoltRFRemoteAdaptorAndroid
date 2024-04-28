@@ -9,13 +9,21 @@
     <color name="tab_select">#FFDC74</color>
     <color name="tab_select_text">#FF000000</color>
 
-    <color name="bg_luminance_zone">#343338</color>
+    <color name="bg_luminance_zone_start">#2f3034</color>
+    <color name="bg_luminance_zone_end">#1b1d21</color>
 
 
-    <color name="presuppose1">#f8b04b</color>
-    <color name="presuppose2">#f76036</color>
-    <color name="presuppose3">#fadd60</color>
-    <color name="presuppose4">#90fb6d</color>
-    <color name="presuppose5">#6afbc1</color>
-    <color name="presuppose6">#ffffff</color>
+
+    <color name="presuppose1">#ffac69</color>
+    <color name="presuppose2">#ff7a0b</color>
+    <color name="presuppose3">#fffa51</color>
+    <color name="presuppose4">#84ff61</color>
+    <color name="presuppose5">#5dffff</color>
+    <color name="presuppose6">#ff7af6</color>
+
+    <color name="inner_circle_start">#525158</color>
+    <color name="inner_circle_end">#1b1d21</color>
+
+    <color name="color_wheel_border_start">#151515</color>
+    <color name="color_wheel_border_end">#757575</color>
 </resources>

@@ -16,9 +16,8 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/index_tab_layout"
-            android:layout_width="0dp"
+            android:layout_width="500dp"
             android:layout_height="50dp"
-            app:layout_constraintWidth_percent="0.93"
             tools:ignore="MissingConstraints"
             app:layout_constraintTop_toBottomOf="@id/index_top_bar"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -33,9 +32,8 @@
 
 
         <androidx.viewpager2.widget.ViewPager2
-            android:layout_width="0dp"
+            android:layout_width="500dp"
             android:layout_height="0dp"
-            app:layout_constraintWidth_percent="0.93"
             android:id="@+id/index_viewPager"
             tools:ignore="MissingConstraints"
             app:layout_constraintTop_toBottomOf="@id/index_tab_layout"

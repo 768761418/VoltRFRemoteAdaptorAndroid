@@ -20,8 +20,13 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 
+import com.lin.voltrfremoteadaptorandroid.R;
+import com.lin.voltrfremoteadaptorandroid.Utils.MessageUtils;
+import com.lin.voltrfremoteadaptorandroid.Utils.SharedPreferencesUtils;
 import com.lin.voltrfremoteadaptorandroid.databinding.FragmentRgbBinding;
 import com.lin.voltrfremoteadaptorandroid.setting.ApplicationSetting;
+import com.lin.voltrfremoteadaptorandroid.view.ColorChooseDialog;
+import com.lin.voltrfremoteadaptorandroid.view.ColorPickerView;
 
 
 /**
@@ -41,6 +46,9 @@ public class RgbFragment extends Fragment {
 
     // 声明平移动画
     private TranslateAnimation animation;
+    private ColorChooseDialog colorChooseDialog;
+
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -50,6 +58,8 @@ public class RgbFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private SharedPreferencesUtils sharedPreferencesUtils;
+    private int presuppose1,presuppose2,presuppose3,presuppose4,presuppose5,presuppose6;
 
 
     public RgbFragment() {
@@ -87,13 +97,21 @@ public class RgbFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(ApplicationSetting.sharedPreferencesFileName, Context.MODE_PRIVATE);
-        int[] colors = {sharedPreferences.getInt("presuppose1",0),
-                        sharedPreferences.getInt("presuppose2",0),
-                        sharedPreferences.getInt("presuppose3",0),
-                        sharedPreferences.getInt("presuppose4",0),
-                        sharedPreferences.getInt("presuppose5",0),
-                        sharedPreferences.getInt("presuppose6",0)
+        sharedPreferencesUtils = SharedPreferencesUtils.getInstance(getContext());
+        presuppose1 = sharedPreferencesUtils.loadIntData(ApplicationSetting.PRESUPPOSE_ONE,0);
+        presuppose2 = sharedPreferencesUtils.loadIntData(ApplicationSetting.PRESUPPOSE_TWO,0);
+        presuppose3 = sharedPreferencesUtils.loadIntData(ApplicationSetting.PRESUPPOSE_THREE,0);
+        presuppose4 = sharedPreferencesUtils.loadIntData(ApplicationSetting.PRESUPPOSE_FOUR,0);
+        presuppose5 = sharedPreferencesUtils.loadIntData(ApplicationSetting.PRESUPPOSE_FIVE,0);
+        presuppose6 = sharedPreferencesUtils.loadIntData(ApplicationSetting.PRESUPPOSE_SIX,0);
+
+        int[] colors = {
+                    presuppose1,
+                    presuppose2,
+                    presuppose3,
+                    presuppose4,
+                    presuppose5,
+                    presuppose6
         };
         ImageView[] imageViews = {
                 fragmentRgbBinding.rgbPresuppose1,
@@ -107,31 +125,17 @@ public class RgbFragment extends Fragment {
         for (int i = 0; i < Math.min(colors.length, imageViews.length); i++) {
             boolean isLast = (i == Math.min(colors.length, imageViews.length) - 1);
             if (isLast){
-                changeColorPresuppose(colors[i], imageViews[i],true);
+                initColorPresuppose(colors[i], imageViews[i],true);
             }else {
-                changeColorPresuppose(colors[i], imageViews[i],false);
+                initColorPresuppose(colors[i], imageViews[i],false);
             }
-
         }
 
 
     }
 
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        // Inflate the layout for this fragment
-        fragmentRgbBinding = fragmentRgbBinding.inflate(inflater,container,false);
-
-
-
-        return fragmentRgbBinding.getRoot();
-    }
-
-//    修改初始颜色预设
-    private void changeColorPresuppose(int color, ImageView imageview,Boolean isCurrent){
+//    初始化颜色预设
+    private void initColorPresuppose(int color, ImageView imageview,Boolean isCurrent){
         //创建Drawable对象
         GradientDrawable drawable=new GradientDrawable();
         if (isCurrent){
@@ -147,6 +151,140 @@ public class RgbFragment extends Fragment {
     }
 
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        // Inflate the layout for this fragment
+        fragmentRgbBinding = fragmentRgbBinding.inflate(inflater,container,false);
+        colorChooseDialog = new ColorChooseDialog(getContext());
+
+//        修改当前选择的函数
+        changeSelectColor();
+//        预设的点击事件
+        presupposeClick();
+//        预设长按修改事件
+        presupposeLongClick();
+
+
+        return fragmentRgbBinding.getRoot();
+    }
+
+    private void changeSelectColor(){
+//        实时修改选中颜色
+        fragmentRgbBinding.rgbColorPicker.setColorListener(new ColorPickerView.SelectListener() {
+            @Override
+            public void selectedColor(int color) {
+                presuppose6 = color;
+                initColorPresuppose(presuppose6,fragmentRgbBinding.rgbPresuppose6,true);
+            }
+        });
+//        抬起修改选中预设
+        fragmentRgbBinding.rgbColorPicker.setKeyUpListener(new ColorPickerView.KeyUpListener() {
+            @Override
+            public void saveColor(int color) {
+                sharedPreferencesUtils.saveIntData(ApplicationSetting.PRESUPPOSE_SIX,color);
+            }
+        });
+    }
+
+
+//    预设按钮长按事件
+    private void presupposeLongClick(){
+        fragmentRgbBinding.rgbPresuppose1.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                colorChooseDialog.show();
+                colorChooseDialog.setColor(presuppose1);
+
+
+                return true;
+            }
+        });
+        fragmentRgbBinding.rgbPresuppose2.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                colorChooseDialog.setColor(presuppose2);
+                colorChooseDialog.show();
+
+                return true;
+            }
+        });
+    }
+
+
+
+    private void presupposeClick(){
+        fragmentRgbBinding.rgbPresuppose1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               usePresupposeOnClick(presuppose1);
+
+
+            }
+        });
+        fragmentRgbBinding.rgbPresuppose2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                usePresupposeOnClick(presuppose2);
+            }
+        });
+        fragmentRgbBinding.rgbPresuppose3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                usePresupposeOnClick(presuppose3);
+            }
+        });
+        fragmentRgbBinding.rgbPresuppose4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                usePresupposeOnClick(presuppose4);
+            }
+        });
+        fragmentRgbBinding.rgbPresuppose5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                usePresupposeOnClick(presuppose5);
+            }
+        });
+
+        fragmentRgbBinding.rgbPresuppose6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                usePresupposeOnClick(presuppose6,true);
+            }
+        });
+
+
+    }
+
+
+//    辅助方法 预设按钮点击触发事件
+    private void usePresupposeOnClick(int color){
+        fragmentRgbBinding.rgbColorPicker.externalClickPresuppose(color);
+        initColorPresuppose(color,fragmentRgbBinding.rgbPresuppose6,true);
+        sharedPreferencesUtils.saveIntData(ApplicationSetting.PRESUPPOSE_SIX,color);
+        int hue = useColorToHue(color);
+        MessageUtils.sendMessageForSetColor(hue);
+    }
+
+    private void usePresupposeOnClick(int color ,boolean isCurrent){
+        if(isCurrent){
+            fragmentRgbBinding.rgbColorPicker.externalClickPresuppose(color);
+
+            int hue = useColorToHue(color);
+            Log.d(TAG, "usePresupposeOnClick: " + hue);
+            MessageUtils.sendMessageForSetColor(hue);
+        }
+    }
+
+//    辅助方法  获取当前颜色的hue值
+    private int useColorToHue(int color){
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv);
+        float hue = hsv[0];
+        int hueInt = (int)(hue +0.5f);
+        return hueInt;
+    }
 
 
 }
