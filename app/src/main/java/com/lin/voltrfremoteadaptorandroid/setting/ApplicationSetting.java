@@ -12,4 +12,5 @@ public class ApplicationSetting {
     public static String PRESUPPOSE_FIVE = "presuppose5";
     public static String PRESUPPOSE_SIX = "presuppose6";
 
+    public static String PRESUPPOSE_CW = "cw";
 }

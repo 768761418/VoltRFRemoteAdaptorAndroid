@@ -21,8 +21,10 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 
 import com.lin.voltrfremoteadaptorandroid.R;
+import com.lin.voltrfremoteadaptorandroid.Utils.ColorUtils;
 import com.lin.voltrfremoteadaptorandroid.Utils.MessageUtils;
 import com.lin.voltrfremoteadaptorandroid.Utils.SharedPreferencesUtils;
+import com.lin.voltrfremoteadaptorandroid.databinding.FragmentCwBinding;
 import com.lin.voltrfremoteadaptorandroid.databinding.FragmentRgbBinding;
 import com.lin.voltrfremoteadaptorandroid.setting.ApplicationSetting;
 import com.lin.voltrfremoteadaptorandroid.view.ColorChooseDialog;
@@ -60,6 +62,7 @@ public class RgbFragment extends Fragment {
     private String mParam2;
     private SharedPreferencesUtils sharedPreferencesUtils;
     private int presuppose1,presuppose2,presuppose3,presuppose4,presuppose5,presuppose6;
+
 
 
     public RgbFragment() {
@@ -125,30 +128,16 @@ public class RgbFragment extends Fragment {
         for (int i = 0; i < Math.min(colors.length, imageViews.length); i++) {
             boolean isLast = (i == Math.min(colors.length, imageViews.length) - 1);
             if (isLast){
-                initColorPresuppose(colors[i], imageViews[i],true);
+                ColorUtils.UtilsChangePresuppose(colors[i], imageViews[i],true);
             }else {
-                initColorPresuppose(colors[i], imageViews[i],false);
+                ColorUtils.UtilsChangePresuppose(colors[i], imageViews[i],false);
             }
         }
 
 
     }
 
-//    初始化颜色预设
-    private void initColorPresuppose(int color, ImageView imageview,Boolean isCurrent){
-        //创建Drawable对象
-        GradientDrawable drawable=new GradientDrawable();
-        if (isCurrent){
-            //设置圆角大小
-            drawable.setCornerRadius(10);
-        }else {
-            //设置shape形状
-            drawable.setShape(GradientDrawable.OVAL);
-        }
-        //设置背景色
-        drawable.setColor(color);
-        imageview.setBackground(drawable);
-    }
+
 
 
     @Override
@@ -175,7 +164,7 @@ public class RgbFragment extends Fragment {
             @Override
             public void selectedColor(int color) {
                 presuppose6 = color;
-                initColorPresuppose(presuppose6,fragmentRgbBinding.rgbPresuppose6,true);
+                ColorUtils.UtilsChangePresuppose(presuppose6,fragmentRgbBinding.rgbPresuppose6,true);
             }
         });
 //        抬起修改选中预设
@@ -195,8 +184,6 @@ public class RgbFragment extends Fragment {
             public boolean onLongClick(View view) {
                 colorChooseDialog.show();
                 colorChooseDialog.setColor(presuppose1);
-
-
                 return true;
             }
         });
@@ -261,7 +248,8 @@ public class RgbFragment extends Fragment {
 //    辅助方法 预设按钮点击触发事件
     private void usePresupposeOnClick(int color){
         fragmentRgbBinding.rgbColorPicker.externalClickPresuppose(color);
-        initColorPresuppose(color,fragmentRgbBinding.rgbPresuppose6,true);
+        ColorUtils.UtilsChangePresuppose(color,fragmentRgbBinding.rgbPresuppose6,true);
+        presuppose6 = color;
         sharedPreferencesUtils.saveIntData(ApplicationSetting.PRESUPPOSE_SIX,color);
         int hue = useColorToHue(color);
         MessageUtils.sendMessageForSetColor(hue);
@@ -270,7 +258,6 @@ public class RgbFragment extends Fragment {
     private void usePresupposeOnClick(int color ,boolean isCurrent){
         if(isCurrent){
             fragmentRgbBinding.rgbColorPicker.externalClickPresuppose(color);
-
             int hue = useColorToHue(color);
             Log.d(TAG, "usePresupposeOnClick: " + hue);
             MessageUtils.sendMessageForSetColor(hue);

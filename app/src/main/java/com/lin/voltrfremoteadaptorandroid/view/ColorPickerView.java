@@ -40,6 +40,7 @@ public class ColorPickerView extends View {
 //    颜色环数组
     private int[] colors;
     private static String TAG = "ColorPickerView";
+    private int numColors ;
 //    移动动画效果
 
 
@@ -55,7 +56,7 @@ public class ColorPickerView extends View {
 //        中心圆画笔
         blackPaint = new Paint();
         colorBorderPaint = new Paint();
-
+        numColors = 360;
 
     }
 
@@ -65,12 +66,13 @@ public class ColorPickerView extends View {
         centerX = getWidth() / 2;
         centerY = getHeight() / 2;
         //设置选择器半径
-        int selectCircle = 15;
+        int selectCircle = (int)( Math.min(centerX, centerY)*0.1);
         int selectBorder = selectCircle + 3;
         //设置色盘半径
         int drawWidth = getWidth();
         int drawHeight = getHeight() - 2*selectBorder;
         radius = Math.min(drawWidth, drawHeight) / 2;
+
         // 设置中心圆的半径
         innerCircleRadius = radius / 3;
         int colorWheelTopY = centerY - radius;
@@ -119,7 +121,7 @@ public class ColorPickerView extends View {
         // 设置选择器边框
         borderPaint.setColor(Color.WHITE);
         borderPaint.setStyle(Paint.Style.STROKE);
-        borderPaint.setStrokeWidth(3); // 设置外边框宽度
+        borderPaint.setStrokeWidth(5); // 设置外边框宽度
         borderPaint.setAntiAlias(true); // 设置抗锯齿
         // 绘制手指触摸点外边框
         canvas.drawCircle(touchX, touchY, selectCircle, borderPaint);
@@ -172,45 +174,43 @@ public class ColorPickerView extends View {
         return true;
     }
 
-    public int getSelectedColor() {
-        return selectedColor;
-    }
 
 
 //    Activity调用预设改变色盘选择的函数
     @SuppressLint("ObjectAnimatorBinding")
     public void externalClickPresuppose(int color){
         Log.d(TAG, "xxx"+colors.length);
-//        找颜色
-        for (int index = 0; index < colors.length; index++) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                if (colors[index] == color) {
-                    int angle = index;
-                    // 计算坐标
-                    int newX = (int) (centerX + radius * Math.cos(Math.toRadians(angle)));
-                    int newY = (int) (centerY + radius * Math.sin(Math.toRadians(angle)));
-//                    修改当前颜色
-                    selectedColor = color;
-                    // 创建属性动画
-                   ObjectAnimator xAnimator = ObjectAnimator.ofInt(this, "touchX", touchX, newX);
-                   ObjectAnimator yAnimator = ObjectAnimator.ofInt(this, "touchY", touchY, newY);
+        float[] colorHsv = getHsv(color);
+        int hue = (int)(colorHsv[0] + 0.5f);
+        int angle = numColors - hue - 1;
+        int colorRadius = (int)(colorHsv[1]*radius + 0.5f);
+        Log.d(TAG, "externalClickPresuppose: " + angle + " xxx"+ colorHsv[1]);
 
-                    // 设置动画持续时间
-                    xAnimator.setDuration(1000);
-                    yAnimator.setDuration(1000);
+        // 计算坐标
+        int newX = (int) (centerX +colorRadius  * Math.cos(Math.toRadians(angle)));
+        int newY = (int) (centerY +colorRadius  * Math.sin(Math.toRadians(angle)));
+        Log.d(TAG, "externalClickPresuppose: " + newX + "lll" + newY);
+//                    修改当前颜色
+        selectedColor = color;
+        // 创建属性动画
+        ObjectAnimator xAnimator = ObjectAnimator.ofInt(this, "touchX", touchX, newX);
+        ObjectAnimator yAnimator = ObjectAnimator.ofInt(this, "touchY", touchY, newY);
+
+        // 设置动画持续时间
+        xAnimator.setDuration(1000);
+        yAnimator.setDuration(1000);
 
                     // 开始动画
-                    AnimatorSet animatorSet = new AnimatorSet();
-                    animatorSet.playTogether(xAnimator, yAnimator);
-                    animatorSet.start();
-                    touchX = newX;
-                    touchY = newY;
-                    invalidate();
-                    break;
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(xAnimator, yAnimator);
+        animatorSet.start();
+        touchX = newX;
+        touchY = newY;
+        invalidate();
+
                 }
-            }
-        }
-    }
+
+
 //    setter给动画调用的
     public void setTouchX(int x) {
         this.touchX = x;
@@ -245,7 +245,21 @@ public class ColorPickerView extends View {
         if (angle < 0) {
             angle += 360;
         }
-        return generateColorWheel()[angle];
+        float[] hsv = getHsv(generateColorWheel()[angle]);
+        // 计算 (x, y) 和 (centerX, centerY) 之间的距离
+        float distance = (float) Math.sqrt(Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2));
+        float saturation = distance/radius;
+        int currentColor =  Color.HSVToColor(new float[]{hsv[0], saturation, ColorSetting.colorV});
+        return currentColor;
+    }
+
+
+//    获取hsv的值
+//    hsv[0] 是色相值，hsv[1] 是饱和度值，hsv[2] 是明度值
+    private float[] getHsv(int color){
+        float[] hsv = new float[3];
+        Color.colorToHSV(color,hsv);
+        return  hsv;
     }
 
 //    选择接口和保存接口
@@ -261,7 +275,7 @@ public class ColorPickerView extends View {
 
     // 辅助方法：生成颜色环
     private int[] generateColorWheel() {
-        int numColors = 360;
+
         int[] colors = new int[numColors];
         int startHue = 0; // 色相值的起始位置为绿色（0）
         for (int i = 0; i < 360; i++) {

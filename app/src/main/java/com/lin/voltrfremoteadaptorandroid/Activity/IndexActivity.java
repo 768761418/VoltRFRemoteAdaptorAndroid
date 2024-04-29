@@ -127,18 +127,19 @@ public class IndexActivity extends BaseActivity {
         if (isFirstTime){
             // 将颜色值存储到 SharedPreferences 中
             int presuppose[] = {
-                    Color.HSVToColor(new float[]{41, ColorSetting.colorS, ColorSetting.colorV}),
-                    Color.HSVToColor(new float[]{24, ColorSetting.colorS, ColorSetting.colorV}),
-                    Color.HSVToColor(new float[]{58, ColorSetting.colorS, ColorSetting.colorV}),
-                    Color.HSVToColor(new float[]{147, ColorSetting.colorS, ColorSetting.colorV}),
-                    Color.HSVToColor(new float[]{178,ColorSetting.colorS, ColorSetting.colorV}),
-                    Color.HSVToColor(new float[]{178, ColorSetting.colorS, ColorSetting.colorV}),
+                    Color.HSVToColor(new float[]{41, 0.8f, ColorSetting.colorV}),
+                    Color.HSVToColor(new float[]{24, 0.8f, ColorSetting.colorV}),
+                    Color.HSVToColor(new float[]{58, 0.8f, ColorSetting.colorV}),
+                    Color.HSVToColor(new float[]{147, 0.8f, ColorSetting.colorV}),
+                    Color.HSVToColor(new float[]{178, 0.8f, ColorSetting.colorV}),
+                    Color.HSVToColor(new float[]{178, 0.8f, ColorSetting.colorV}),
 
             };
             String presupposeName = "presuppose";
             for(int i= 0;i<presuppose.length;i++){
                 sharedPreferencesUtils.saveIntData(presupposeName+(i+1), presuppose[i]);
             }
+            sharedPreferencesUtils.saveIntData(ApplicationSetting.PRESUPPOSE_CW,2200);
             sharedPreferencesUtils.saveBooleanData("isFirstTime",false);
         }
     }

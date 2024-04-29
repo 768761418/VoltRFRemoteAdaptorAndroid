@@ -13,7 +13,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/luminance_layout"
             android:layout_width="match_parent"
-            android:layout_height="170dp"
+            android:layout_height="210dp"
             android:background="@drawable/bg_luminance_zone_module"
             tools:ignore="MissingConstraints">
 
@@ -79,15 +79,15 @@
                 <SeekBar
                     android:id="@+id/luminance_seekbar"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:maxHeight = "25dp"
+                    android:layout_height="35dp"
+                    android:maxHeight = "30dp"
                     android:maxWidth="300dp"
                     android:progress="20"
                     android:max="255"
                     android:thumb="@drawable/seekbar_thumb"
                     android:progressDrawable="@drawable/layer_list_seekbar"
                     app:layout_constraintTop_toBottomOf="@id/luminance_top"
-                    android:layout_marginTop="15dp"/>
+                    android:layout_marginTop="20dp"/>
 
 <!--                三个亮度按钮-->
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -95,7 +95,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@id/luminance_seekbar"
-                    android:layout_marginTop="15dp">
+                    android:layout_marginTop="20dp">
                     <TextView
                         android:id="@+id/luminance_25"
                         android:layout_width="wrap_content"
@@ -105,7 +105,7 @@
                         android:gravity="center"
                         android:textColor="@color/text"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        android:textSize="15sp"
+                        android:textSize="20sp"
                         android:paddingBottom="5sp"
                         tools:ignore="MissingConstraints" />
                     <TextView
@@ -143,7 +143,7 @@
 <!--        分组部分-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="170dp"
+            android:layout_height="210dp"
             android:background="@drawable/bg_luminance_zone_module"
             app:layout_constraintTop_toBottomOf="@id/luminance_layout"
             android:layout_marginTop="20dp">

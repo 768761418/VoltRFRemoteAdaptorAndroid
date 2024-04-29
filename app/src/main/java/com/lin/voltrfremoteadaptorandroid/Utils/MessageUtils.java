@@ -30,5 +30,8 @@ public class MessageUtils {
         }
     }
 
+    public static void sendMessageForTemperature(int temperature){
+
+    }
 
 }

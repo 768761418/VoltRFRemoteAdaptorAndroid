@@ -14,7 +14,7 @@
         <com.lin.voltrfremoteadaptorandroid.view.ColorPickerView
             android:id="@+id/rgb_color_picker"
             android:layout_width="match_parent"
-            android:layout_height="280dp"
+            android:layout_height="350dp"
             tools:ignore="MissingConstraints"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

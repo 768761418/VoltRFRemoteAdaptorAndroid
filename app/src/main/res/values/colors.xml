@@ -26,4 +26,9 @@
 
     <color name="color_wheel_border_start">#151515</color>
     <color name="color_wheel_border_end">#757575</color>
+
+    <color name="cw_presuppose1">#ffa874</color>
+    <color name="cw_presuppose2">#ffbf74</color>
+    <color name="cw_presuppose3">#ffdc76</color>
+    <color name="cw_presuppose4">#fffefe</color>
 </resources>
