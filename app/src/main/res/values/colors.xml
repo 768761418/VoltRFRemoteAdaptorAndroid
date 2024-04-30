@@ -31,4 +31,6 @@
     <color name="cw_presuppose2">#ffbf74</color>
     <color name="cw_presuppose3">#ffdc76</color>
     <color name="cw_presuppose4">#fffefe</color>
+
+    <color name="remote_divider">#979797</color>
 </resources>

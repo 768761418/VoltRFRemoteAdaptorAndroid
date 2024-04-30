@@ -19,10 +19,16 @@
     <string name="luminance_25">25%</string>
     <string name="luminance_50">50%</string>
     <string name="luminance_75">75%</string>
-    
+    <string name="luminance_100">100%</string>
     
     <string name="temperature_2200">2200k</string>
     <string name="temperature_2700">2700k</string>
     <string name="temperature_3000">3000k</string>
     <string name="temperature_4000">4000k</string>
+
+    <string name="remote_flash">FLASH</string>
+    <string name="remote_strobe">STROBE</string>
+    <string name="remote_fade">FADE</string>
+    <string name="remote_smooth">SMOOTH</string>
+
 </resources>
