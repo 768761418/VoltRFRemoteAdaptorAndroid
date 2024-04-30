@@ -1,10 +1,16 @@
 package com.lin.voltrfremoteadaptorandroid.Activity;
 
+import android.graphics.Color;
+import android.graphics.Matrix;
+
+import android.graphics.Shader;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +41,8 @@ public class CwFragment extends Fragment {
     private int presuppose1,presuppose2,presuppose3,presuppose4,presuppose5;
     private FragmentCwBinding fragmentCwBinding;
     private SharedPreferencesUtils sharedPreferencesUtils;
+    private final static String TAG = "CwFragment";
+    private int currentValue;
 
     public CwFragment() {
         // Required empty public constructor
@@ -78,10 +86,14 @@ public class CwFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+//        初始化cw界面的预设
         sharedPreferencesUtils = SharedPreferencesUtils.getInstance(getContext());
-        int currentText = sharedPreferencesUtils.loadIntData(ApplicationSetting.PRESUPPOSE_CW,2200);
-        String strCurrentText = currentText + "k";
+        currentValue = sharedPreferencesUtils.loadIntData(ApplicationSetting.PRESUPPOSE_CW,2200);
+        String strCurrentText = currentValue + "k";
         fragmentCwBinding.cwCurrentText.setText(strCurrentText);
+        fragmentCwBinding.cwTemperatureSeekbar.setProgress(currentValue);
+        useChangeCwPresuppose5(currentValue);
+
         ColorUtils.UtilsChangePresuppose(getContext().getColor(R.color.cw_presuppose1), fragmentCwBinding.cwPresuppose1,false);
         ColorUtils.UtilsChangePresuppose(getContext().getColor(R.color.cw_presuppose2), fragmentCwBinding.cwPresuppose2,false);
         ColorUtils.UtilsChangePresuppose(getContext().getColor(R.color.cw_presuppose3), fragmentCwBinding.cwPresuppose3,false);
@@ -104,6 +116,8 @@ public class CwFragment extends Fragment {
             public void onProgressChanged(SeekBar seekBar, int current, boolean b) {
                 String strCurrentText = current + "k";
                 fragmentCwBinding.cwCurrentText.setText(strCurrentText);
+                currentValue = current;
+                useChangeCwPresuppose5(currentValue);
                 MessageUtils.sendMessageForTemperature(current);
             }
 
@@ -114,7 +128,7 @@ public class CwFragment extends Fragment {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
+                sharedPreferencesUtils.saveIntData(ApplicationSetting.PRESUPPOSE_CW,seekBar.getProgress());
             }
         });
     }
@@ -123,39 +137,96 @@ public class CwFragment extends Fragment {
         fragmentCwBinding.cwPresuppose1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                fragmentCwBinding.cwTemperatureSeekbar.setProgress(2200,true);
+                currentValue = 2200;
+                fragmentCwBinding.cwTemperatureSeekbar.setProgress(currentValue,true);
                 ColorUtils.UtilsChangePresuppose(getContext().getColor(R.color.cw_presuppose1), fragmentCwBinding.cwPresuppose5,false);
-                sharedPreferencesUtils.saveIntData(ApplicationSetting.PRESUPPOSE_CW,2200);
+                sharedPreferencesUtils.saveIntData(ApplicationSetting.PRESUPPOSE_CW,currentValue);
+                MessageUtils.sendMessageForTemperature(currentValue);
             }
         });
         fragmentCwBinding.cwPresuppose2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                fragmentCwBinding.cwTemperatureSeekbar.setProgress(2700,true);
+                currentValue = 2700;
+                fragmentCwBinding.cwTemperatureSeekbar.setProgress(currentValue,true);
                 ColorUtils.UtilsChangePresuppose(getContext().getColor(R.color.cw_presuppose2), fragmentCwBinding.cwPresuppose5,false);
-                sharedPreferencesUtils.saveIntData(ApplicationSetting.PRESUPPOSE_CW,2700);
+                sharedPreferencesUtils.saveIntData(ApplicationSetting.PRESUPPOSE_CW,currentValue);
+                MessageUtils.sendMessageForTemperature(currentValue);
             }
         });
         fragmentCwBinding.cwPresuppose3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                fragmentCwBinding.cwTemperatureSeekbar.setProgress(3000,true);
+                currentValue = 3000;
+                fragmentCwBinding.cwTemperatureSeekbar.setProgress(currentValue,true);
                 ColorUtils.UtilsChangePresuppose(getContext().getColor(R.color.cw_presuppose3), fragmentCwBinding.cwPresuppose5,false);
-                sharedPreferencesUtils.saveIntData(ApplicationSetting.PRESUPPOSE_CW,3000);
+                sharedPreferencesUtils.saveIntData(ApplicationSetting.PRESUPPOSE_CW,currentValue);
+                MessageUtils.sendMessageForTemperature(currentValue);
             }
         });
         fragmentCwBinding.cwPresuppose4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                fragmentCwBinding.cwTemperatureSeekbar.setProgress(4000,true);
+                currentValue = 4000;
+                fragmentCwBinding.cwTemperatureSeekbar.setProgress(currentValue,true);
                 ColorUtils.UtilsChangePresuppose(getContext().getColor(R.color.cw_presuppose4), fragmentCwBinding.cwPresuppose5,false);
-                sharedPreferencesUtils.saveIntData(ApplicationSetting.PRESUPPOSE_CW,4000);
+                sharedPreferencesUtils.saveIntData(ApplicationSetting.PRESUPPOSE_CW,currentValue);
+                MessageUtils.sendMessageForTemperature(currentValue);
+            }
+        });
+
+        fragmentCwBinding.cwPresuppose5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MessageUtils.sendMessageForTemperature(currentValue);
             }
         });
     }
 
+
+
+
+
+    private void useChangeCwPresuppose5(int current){
+        float radio = useGetRadio(current);
+        int color = useGetCurrentTemperatureColor(radio);
+        ColorUtils.UtilsChangePresuppose(color, fragmentCwBinding.cwPresuppose5,false);
+    }
+    private float useGetRadio(int current){
+        float radio = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            radio = (float) (current-fragmentCwBinding.cwTemperatureSeekbar.getMin())/(fragmentCwBinding.cwTemperatureSeekbar.getMax() -fragmentCwBinding.cwTemperatureSeekbar.getMin());
+        }
+        return radio;
+    }
+
+    private int useGetCurrentTemperatureColor(float radio){
+        Log.d(TAG, "useGetCurrentTemperatureColor: " +radio);
+        int mStartColor = getContext().getColor(R.color.cw_presuppose1);
+        int mEndColor = getContext().getColor(R.color.cw_presuppose4);
+        int mCenterColor =getContext().getColor(R.color.cw_presuppose3);
+
+        int redStart = Color.red(mStartColor);
+        int blueStart = Color.blue(mStartColor);
+        int greenStart = Color.green(mStartColor);
+
+        int redCenter = Color.red(mCenterColor);
+        int blueCenter = Color.blue(mCenterColor);
+        int greenCenter = Color.green(mCenterColor);
+
+        int redEnd = Color.red(mEndColor);
+        int blueEnd = Color.blue(mEndColor);
+        int greenEnd = Color.green(mEndColor);
+        int red = (int) (redCenter + ((redEnd - redCenter) * radio + 0.5));
+        int greed = (int) (greenCenter + ((greenEnd - greenCenter) * radio + 0.5));
+        int blue = (int) (blueCenter + ((blueEnd - blueCenter) * radio + 0.5));
+
+        if (radio < 0.5f){
+            radio = radio*2f;
+            red = (int) (redStart + ((redCenter - redStart) * radio + 0.5));
+            greed = (int) (greenStart + ((greenCenter - greenStart) * radio + 0.5));
+            blue = (int) (blueStart + ((blueCenter - blueStart) * radio + 0.5));
+        }
+        return Color.argb(255,red, greed, blue);
+    }
 }

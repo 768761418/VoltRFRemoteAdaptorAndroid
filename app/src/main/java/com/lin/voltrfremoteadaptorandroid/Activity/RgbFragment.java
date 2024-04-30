@@ -134,6 +134,21 @@ public class RgbFragment extends Fragment {
             }
         }
 
+        int touchX = sharedPreferencesUtils.loadIntData(ApplicationSetting.PRESUPPOSE_SIX_TOUCH_X,0);
+        int touchY = sharedPreferencesUtils.loadIntData(ApplicationSetting.PRESUPPOSE_SIX_TOUCH_Y,0);
+        if (touchX != 0 && touchY != 0) {
+            Log.d(TAG, "onActivityCreated: xy");
+            fragmentRgbBinding.rgbColorPicker.setTouchX(touchX);
+            fragmentRgbBinding.rgbColorPicker.setTouchY(touchY);
+
+        }else {
+            int[] result = fragmentRgbBinding.rgbColorPicker.useGetNewXY(presuppose6,178);
+            Log.d(TAG, "onActivityCreated: " + result[0] + "xxx" + result[1]);
+            fragmentRgbBinding.rgbColorPicker.setTouchX(result[0]);
+            fragmentRgbBinding.rgbColorPicker.setTouchY(result[1]);
+        }
+        fragmentRgbBinding.rgbColorPicker.setSelectedColor(presuppose6);
+
 
     }
 
@@ -146,7 +161,6 @@ public class RgbFragment extends Fragment {
         // Inflate the layout for this fragment
         fragmentRgbBinding = fragmentRgbBinding.inflate(inflater,container,false);
         colorChooseDialog = new ColorChooseDialog(getContext());
-
 //        修改当前选择的函数
         changeSelectColor();
 //        预设的点击事件
@@ -157,6 +171,8 @@ public class RgbFragment extends Fragment {
 
         return fragmentRgbBinding.getRoot();
     }
+
+
 
     private void changeSelectColor(){
 //        实时修改选中颜色
@@ -170,8 +186,10 @@ public class RgbFragment extends Fragment {
 //        抬起修改选中预设
         fragmentRgbBinding.rgbColorPicker.setKeyUpListener(new ColorPickerView.KeyUpListener() {
             @Override
-            public void saveColor(int color) {
+            public void saveColor(int color,int touchX,int touchY) {
                 sharedPreferencesUtils.saveIntData(ApplicationSetting.PRESUPPOSE_SIX,color);
+                sharedPreferencesUtils.saveIntData(ApplicationSetting.PRESUPPOSE_SIX_TOUCH_X,touchX);
+                sharedPreferencesUtils.saveIntData(ApplicationSetting.PRESUPPOSE_SIX_TOUCH_Y,touchY);
             }
         });
     }
@@ -247,17 +265,18 @@ public class RgbFragment extends Fragment {
 
 //    辅助方法 预设按钮点击触发事件
     private void usePresupposeOnClick(int color){
-        fragmentRgbBinding.rgbColorPicker.externalClickPresuppose(color);
+        int[] result = fragmentRgbBinding.rgbColorPicker.externalClickPresuppose(color);
         ColorUtils.UtilsChangePresuppose(color,fragmentRgbBinding.rgbPresuppose6,true);
         presuppose6 = color;
         sharedPreferencesUtils.saveIntData(ApplicationSetting.PRESUPPOSE_SIX,color);
+        sharedPreferencesUtils.saveIntData(ApplicationSetting.PRESUPPOSE_SIX_TOUCH_X,result[0]);
+        sharedPreferencesUtils.saveIntData(ApplicationSetting.PRESUPPOSE_SIX_TOUCH_Y,result[1]);
         int hue = useColorToHue(color);
         MessageUtils.sendMessageForSetColor(hue);
     }
 
     private void usePresupposeOnClick(int color ,boolean isCurrent){
         if(isCurrent){
-            fragmentRgbBinding.rgbColorPicker.externalClickPresuppose(color);
             int hue = useColorToHue(color);
             Log.d(TAG, "usePresupposeOnClick: " + hue);
             MessageUtils.sendMessageForSetColor(hue);

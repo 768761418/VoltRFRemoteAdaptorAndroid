@@ -41,7 +41,6 @@ public class ColorChooseDialog extends Dialog {
         setContentView(R.layout.dialog_color_choose);
         initUi();
         ColorPickerView colorPickerView = findViewById(R.id.dialog_color_picker);
-        colorPickerView.externalChangePresuppose(color);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

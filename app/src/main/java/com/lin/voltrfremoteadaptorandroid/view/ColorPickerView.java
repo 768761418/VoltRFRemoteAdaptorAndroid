@@ -161,7 +161,7 @@ public class ColorPickerView extends View {
             case MotionEvent.ACTION_UP:
                 // 处理抬起事件，如果有需要的话
                 if (keyUpListener != null){
-                    keyUpListener.saveColor(selectedColor);
+                    keyUpListener.saveColor(selectedColor,touchX,touchY);
                 }
                 break;
         }
@@ -178,18 +178,11 @@ public class ColorPickerView extends View {
 
 //    Activity调用预设改变色盘选择的函数
     @SuppressLint("ObjectAnimatorBinding")
-    public void externalClickPresuppose(int color){
-        Log.d(TAG, "xxx"+colors.length);
-        float[] colorHsv = getHsv(color);
-        int hue = (int)(colorHsv[0] + 0.5f);
-        int angle = numColors - hue - 1;
-        int colorRadius = (int)(colorHsv[1]*radius + 0.5f);
-        Log.d(TAG, "externalClickPresuppose: " + angle + " xxx"+ colorHsv[1]);
+    public int[] externalClickPresuppose(int color){
+        int[] resultXY = useGetNewXY(color,0);
 
-        // 计算坐标
-        int newX = (int) (centerX +colorRadius  * Math.cos(Math.toRadians(angle)));
-        int newY = (int) (centerY +colorRadius  * Math.sin(Math.toRadians(angle)));
-        Log.d(TAG, "externalClickPresuppose: " + newX + "lll" + newY);
+        int newX = resultXY[0];
+        int newY = resultXY[1];
 //                    修改当前颜色
         selectedColor = color;
         // 创建属性动画
@@ -208,7 +201,8 @@ public class ColorPickerView extends View {
         touchY = newY;
         invalidate();
 
-                }
+        return resultXY;
+    }
 
 
 //    setter给动画调用的
@@ -220,23 +214,28 @@ public class ColorPickerView extends View {
         this.touchY = y;
         invalidate(); // 更新视图以反映属性更改
     }
-
-
-    public void externalChangePresuppose(int color){
-        for (int index = 0; index < colors.length; index++) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                if (colors[index] == color) {
-                    int angle = index;
-                    // 计算坐标
-                    touchX = (int) (centerX + radius * Math.cos(Math.toRadians(angle)));
-                    touchY = (int) (centerY + radius * Math.sin(Math.toRadians(angle)));
-                    selectedColor = color;
-                    invalidate();
-                }
-            }
-        }
+    public void setSelectedColor(int selectedColor){
+        this.selectedColor = selectedColor;
+        invalidate();
     }
 
+
+    public int[] useGetNewXY(int color,int hue){
+        int[] result = new int[2];
+        float[] colorHsv = getHsv(color);
+        if (hue ==0){
+            hue = (int)(colorHsv[0] + 0.5f);
+        }
+        int angle = numColors - hue - 1;
+        int colorRadius = (int)(colorHsv[1]*radius + 0.5f);
+
+        // 计算坐标
+        int newX = (int) (centerX +colorRadius  * Math.cos(Math.toRadians(angle)));
+        int newY = (int) (centerY +colorRadius  * Math.sin(Math.toRadians(angle)));
+        result[0] = newX;
+        result[1] = newY;
+        return result;
+    }
 
     // 辅助方法：获取触摸点的颜色
     private int getPixelColor(int x, int y) {
@@ -293,7 +292,7 @@ public class ColorPickerView extends View {
     }
 
     public interface KeyUpListener{
-        void saveColor(int color);
+        void saveColor(int color,int touchX, int touchY);
     }
 
 

@@ -19,10 +19,12 @@ public class MessageUtils {
     }
 
     public static void sendMessageForSetColor(int hue){
+        Log.d(TAG, "sendMessageForSetColor: " + hue);
 
     }
 
     public static void sendMessageForOnOrOff(boolean isOn){
+        Log.d(TAG, "sendMessageForOnOrOff: " + isOn);
         if(isOn){
 
         }else {
@@ -31,6 +33,7 @@ public class MessageUtils {
     }
 
     public static void sendMessageForTemperature(int temperature){
+        Log.d(TAG, "sendMessageForTemperature: " +temperature);
 
     }
 
