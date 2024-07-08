@@ -18,7 +18,6 @@
             tools:ignore="MissingConstraints">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-
                 android:layout_width="440dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintWidth_percent="0.9"
@@ -85,8 +84,10 @@
                     android:progress="20"
                     android:max="255"
                     android:thumb="@drawable/seekbar_thumb"
+                    android:thumbOffset="6dp"
                     android:progressDrawable="@drawable/layer_list_seekbar"
                     app:layout_constraintTop_toBottomOf="@id/luminance_top"
+                    android:splitTrack="false"
                     android:layout_marginTop="20dp"/>
 
 <!--                三个亮度按钮-->

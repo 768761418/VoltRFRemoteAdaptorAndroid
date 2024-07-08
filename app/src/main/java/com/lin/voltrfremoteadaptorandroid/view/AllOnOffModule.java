@@ -22,8 +22,8 @@ public class AllOnOffModule extends ConstraintLayout {
     ModuleAllOnOffBinding moduleAllOnOffBinding;
     public AllOnOffModule(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
-        moduleAllOnOffBinding = DataBindingUtil.inflate(layoutInflater, R.layout.module_all_on_off,this,true);
+
+
         setClick();
     }
 
@@ -41,5 +41,13 @@ public class AllOnOffModule extends ConstraintLayout {
              MessageUtils.sendMessageForOnOrOff(false);
           }
       });
+    }
+
+    public View allOn(){
+        return moduleAllOnOffBinding.allOn;
+    }
+
+    public View allOff(){
+        return moduleAllOnOffBinding.allOff;
     }
 }

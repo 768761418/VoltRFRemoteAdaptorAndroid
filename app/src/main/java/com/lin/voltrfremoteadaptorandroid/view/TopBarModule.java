@@ -11,8 +11,9 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
-import com.lin.voltrfremoteadaptorandroid.Activity.RemoteActivity;
+import com.lin.voltrfremoteadaptorandroid.Activity.Control.RemoteActivity;
 import com.lin.voltrfremoteadaptorandroid.R;
+import com.lin.voltrfremoteadaptorandroid.Utils.MessageUtils;
 import com.lin.voltrfremoteadaptorandroid.databinding.ModuleTopBarBinding;
 
 public class TopBarModule extends LinearLayout {
@@ -58,9 +59,11 @@ public class TopBarModule extends LinearLayout {
                     if (switchStatus == 0){
                         switchStatus = 1;
                         moduleTopBarBinding.rgbAndCwSwitch.setImageResource(R.drawable.icon_switch_on);
+                        MessageUtils.sendMessageForSwitch(true);
                     } else if (switchStatus ==1 ) {
                         switchStatus = 0;
                         moduleTopBarBinding.rgbAndCwSwitch.setImageResource(R.drawable.icon_switch_off);
+                        MessageUtils.sendMessageForSwitch(false);
                     }
 
                 }

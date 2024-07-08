@@ -1,17 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_selected="true">
-        <shape>
-            <solid android:color="@color/tab_select"/>
-        </shape>
+        <layer-list>
+            <item>
+                <shape>
+                    <solid android:color="@color/tab"/>
+                </shape>
+            </item>
+            <item>
+                <shape>
+                    <solid android:color="@color/tab_select"/>
+                    <corners android:radius="8dp"/>
+                </shape>
+            </item>
+        </layer-list>
     </item>
 
-    <item
-        android:state_selected="false"
-        android:state_focused="false"
-        android:state_pressed="false">
-        <shape>
-            <solid android:color="@color/tab"/>
-        </shape>
+    <item android:state_selected="false">
+        <layer-list>
+            <item>
+                <shape>
+                    <solid android:color="@color/tab"/>
+                </shape>
+            </item>
+            <item>
+                <shape>
+                    <solid android:color="@color/tab"/>
+                </shape>
+            </item>
+        </layer-list>
     </item>
+
 </selector>

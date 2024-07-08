@@ -1,12 +1,6 @@
-package com.lin.voltrfremoteadaptorandroid.Activity;
+package com.lin.voltrfremoteadaptorandroid.Activity.Control;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -20,15 +14,18 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 
-import com.lin.voltrfremoteadaptorandroid.R;
+import com.lin.voltrfremoteadaptorandroid.ApplicationData;
 import com.lin.voltrfremoteadaptorandroid.Utils.ColorUtils;
 import com.lin.voltrfremoteadaptorandroid.Utils.MessageUtils;
 import com.lin.voltrfremoteadaptorandroid.Utils.SharedPreferencesUtils;
-import com.lin.voltrfremoteadaptorandroid.databinding.FragmentCwBinding;
 import com.lin.voltrfremoteadaptorandroid.databinding.FragmentRgbBinding;
 import com.lin.voltrfremoteadaptorandroid.setting.ApplicationSetting;
 import com.lin.voltrfremoteadaptorandroid.view.ColorChooseDialog;
 import com.lin.voltrfremoteadaptorandroid.view.ColorPickerView;
+
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
@@ -98,6 +95,12 @@ public class RgbFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        fragmentRgbBinding.luminanceAndZone.setProgress(ApplicationData.luminanceData,true);
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         sharedPreferencesUtils = SharedPreferencesUtils.getInstance(getContext());
@@ -137,15 +140,21 @@ public class RgbFragment extends Fragment {
         int touchX = sharedPreferencesUtils.loadIntData(ApplicationSetting.PRESUPPOSE_SIX_TOUCH_X,0);
         int touchY = sharedPreferencesUtils.loadIntData(ApplicationSetting.PRESUPPOSE_SIX_TOUCH_Y,0);
         if (touchX != 0 && touchY != 0) {
-            Log.d(TAG, "onActivityCreated: xy");
             fragmentRgbBinding.rgbColorPicker.setTouchX(touchX);
             fragmentRgbBinding.rgbColorPicker.setTouchY(touchY);
 
         }else {
-            int[] result = fragmentRgbBinding.rgbColorPicker.useGetNewXY(presuppose6,178);
-            Log.d(TAG, "onActivityCreated: " + result[0] + "xxx" + result[1]);
-            fragmentRgbBinding.rgbColorPicker.setTouchX(result[0]);
-            fragmentRgbBinding.rgbColorPicker.setTouchY(result[1]);
+            fragmentRgbBinding.rgbColorPicker.setOnDrawCompletedCallback(new Runnable() {
+                @Override
+                public void run() {
+                    int[] resultXY = fragmentRgbBinding.rgbColorPicker.setStartColor(presuppose6);
+                    fragmentRgbBinding.rgbColorPicker.setTouchX(resultXY[0]);
+                    fragmentRgbBinding.rgbColorPicker.setTouchY(resultXY[1]);
+
+                }
+            });
+
+
         }
         fragmentRgbBinding.rgbColorPicker.setSelectedColor(presuppose6);
 
@@ -202,15 +211,49 @@ public class RgbFragment extends Fragment {
             public boolean onLongClick(View view) {
                 colorChooseDialog.show();
                 colorChooseDialog.setColor(presuppose1);
+                colorChooseDialog.setDoneOnclickListener(new ColorChooseDialog.DoneOnclickListener() {
+                    @Override
+                    public void onDoneOnclickListener() {
+                        Log.d(TAG, "onDoneOnclickListener:  +klklx");
+                        colorChooseDialog.setNewPresuppose(1);
+//                        ColorUtils.UtilsChangePresuppose(colors[i], imageViews[i],false);
+                    }
+                });
                 return true;
             }
         });
         fragmentRgbBinding.rgbPresuppose2.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                colorChooseDialog.setColor(presuppose2);
                 colorChooseDialog.show();
+                colorChooseDialog.setColor(presuppose2);
+                return true;
+            }
+        });
 
+        fragmentRgbBinding.rgbPresuppose3.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                colorChooseDialog.show();
+                colorChooseDialog.setColor(presuppose3);
+                return true;
+            }
+        });
+
+        fragmentRgbBinding.rgbPresuppose4.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                colorChooseDialog.show();
+                colorChooseDialog.setColor(presuppose4);
+                return true;
+            }
+        });
+
+        fragmentRgbBinding.rgbPresuppose5.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                colorChooseDialog.show();
+                colorChooseDialog.setColor(presuppose5);
                 return true;
             }
         });

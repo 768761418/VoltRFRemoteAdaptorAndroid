@@ -14,12 +14,15 @@ import android.graphics.RadialGradient;
 import android.graphics.Shader;
 import android.graphics.SweepGradient;
 import android.os.Build;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import com.lin.voltrfremoteadaptorandroid.R;
 import com.lin.voltrfremoteadaptorandroid.setting.ColorSetting;
+
+import java.util.TimerTask;
 
 
 public class ColorPickerView extends View {
@@ -41,6 +44,8 @@ public class ColorPickerView extends View {
     private int[] colors;
     private static String TAG = "ColorPickerView";
     private int numColors ;
+    private  boolean isDrawn = false;
+    private Runnable onDrawCompletedCallback;
 //    移动动画效果
 
 
@@ -57,8 +62,9 @@ public class ColorPickerView extends View {
         blackPaint = new Paint();
         colorBorderPaint = new Paint();
         numColors = 360;
-
     }
+
+
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -125,6 +131,21 @@ public class ColorPickerView extends View {
         borderPaint.setAntiAlias(true); // 设置抗锯齿
         // 绘制手指触摸点外边框
         canvas.drawCircle(touchX, touchY, selectCircle, borderPaint);
+        if (!isDrawn){
+            // 如果第一次有回调，执行回调
+            if (onDrawCompletedCallback != null) {
+                new Handler().post(onDrawCompletedCallback);
+            }
+            isDrawn = true;
+        }
+
+    }
+
+    public boolean getIsDraw(){
+        return this.isDrawn;
+    }
+    public void setIsDraw(boolean isDraw){
+        this.isDrawn = isDraw;
     }
 
     @Override
@@ -204,6 +225,15 @@ public class ColorPickerView extends View {
         return resultXY;
     }
 
+    public int[] setStartColor(int color ){
+        int[] resultXY = useGetNewXY(color,0);
+        touchX = resultXY[0];
+        touchY = resultXY[1];
+        selectedColor = color;
+        invalidate();
+        return resultXY;
+    }
+
 
 //    setter给动画调用的
     public void setTouchX(int x) {
@@ -220,6 +250,8 @@ public class ColorPickerView extends View {
     }
 
 
+
+
     public int[] useGetNewXY(int color,int hue){
         int[] result = new int[2];
         float[] colorHsv = getHsv(color);
@@ -232,6 +264,7 @@ public class ColorPickerView extends View {
         // 计算坐标
         int newX = (int) (centerX +colorRadius  * Math.cos(Math.toRadians(angle)));
         int newY = (int) (centerY +colorRadius  * Math.sin(Math.toRadians(angle)));
+        Log.d(TAG, "useGetNewXY: " + newX + "xxxx" + newY);
         result[0] = newX;
         result[1] = newY;
         return result;
@@ -284,7 +317,9 @@ public class ColorPickerView extends View {
         return colors;
     }
 
-
+    public void setOnDrawCompletedCallback(Runnable callback) {
+        this.onDrawCompletedCallback = callback;
+    }
 
 
     public interface SelectListener{
@@ -294,6 +329,8 @@ public class ColorPickerView extends View {
     public interface KeyUpListener{
         void saveColor(int color,int touchX, int touchY);
     }
+
+
 
 
 }

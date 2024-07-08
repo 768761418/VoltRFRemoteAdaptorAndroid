@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class OtgReceiver extends BroadcastReceiver {
-    private final String  TAG = "SerialReceiver";
+    private final String  TAG = "OtgReceiver";
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d(TAG, "8484848");

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.IndexActivity"
+    tools:context=".Activity.Control.RgbCwControlActivity"
     android:background="@color/bg">
      <com.lin.voltrfremoteadaptorandroid.view.TopBarModule
          android:id="@+id/index_top_bar"
@@ -13,9 +13,8 @@
          tools:ignore="InvalidId,MissingConstraints" />
 
 
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/index_tab_layout"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/index_card"
             android:layout_width="500dp"
             android:layout_height="50dp"
             tools:ignore="MissingConstraints"
@@ -23,12 +22,21 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginTop="15dp"
-            app:tabIndicatorHeight="0dp"
-            app:tabBackground="@drawable/tab_selector_list"
-            app:tabTextColor="@color/text"
-            app:tabSelectedTextColor="@color/tab_select_text"
-            app:tabMode="fixed"
-            />
+            app:cardCornerRadius="8dp">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/index_tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:ignore="MissingConstraints"
+                app:tabIndicatorHeight="0dp"
+                app:tabBackground="@drawable/tab_selector_list"
+                app:tabTextColor="@color/text"
+                app:tabSelectedTextColor="@color/tab_select_text"
+                app:tabMode="fixed"
+                />
+        </androidx.cardview.widget.CardView>
+
 
 
         <androidx.viewpager2.widget.ViewPager2
@@ -36,7 +44,7 @@
             android:layout_height="0dp"
             android:id="@+id/index_viewPager"
             tools:ignore="MissingConstraints"
-            app:layout_constraintTop_toBottomOf="@id/index_tab_layout"
+            app:layout_constraintTop_toBottomOf="@id/index_card"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

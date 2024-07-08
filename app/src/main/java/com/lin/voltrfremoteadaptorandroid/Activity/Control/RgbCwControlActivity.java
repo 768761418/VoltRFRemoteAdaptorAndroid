@@ -1,13 +1,9 @@
-package com.lin.voltrfremoteadaptorandroid.Activity;
+package com.lin.voltrfremoteadaptorandroid.Activity.Control;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.content.Context;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.hardware.usb.UsbManager;
@@ -17,6 +13,7 @@ import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.lin.voltrfremoteadaptorandroid.Activity.BaseActivity;
 import com.lin.voltrfremoteadaptorandroid.Adapter.FgmAdapter;
 import com.lin.voltrfremoteadaptorandroid.Utils.SharedPreferencesUtils;
 import com.lin.voltrfremoteadaptorandroid.setting.ApplicationSetting;
@@ -29,8 +26,8 @@ import com.lin.voltrfremoteadaptorandroid.Utils.PermissionUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IndexActivity extends BaseActivity {
-    private String TAG = "IndexActivity";
+public class RgbCwControlActivity extends BaseActivity {
+    private String TAG = "RgbCwControlActivity";
     private PermissionUtils permissionUtils;
     private OtgReceiver otgReceiver;
     private IntentFilter filter;
@@ -49,7 +46,7 @@ public class IndexActivity extends BaseActivity {
 //                如果没请求成功，在这写
                 if (grantResults[i] != PackageManager.PERMISSION_GRANTED){
 //                    弹出提示
-                    Toast.makeText(IndexActivity.this, "Please grant sufficient permissions to ensure the proper functioning of the app", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RgbCwControlActivity.this, "Please grant sufficient permissions to ensure the proper functioning of the app", Toast.LENGTH_SHORT).show();
                 }
 //                如果请求成功在这写
                 else {
@@ -63,7 +60,7 @@ public class IndexActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_index);
-        sharedPreferencesUtils =SharedPreferencesUtils.getInstance(IndexActivity.this);
+        sharedPreferencesUtils =SharedPreferencesUtils.getInstance(RgbCwControlActivity.this);
         //初始化预设
         initPresuppose();
         //获取权限
@@ -82,7 +79,7 @@ public class IndexActivity extends BaseActivity {
     private  void initFgmData(){
 //        初始化顶部栏
         topBarModule= findViewById(R.id.index_top_bar);
-        topBarModule.currentIndexForTop(IndexActivity.this,0,getString(R.string.Rgb_title));
+        topBarModule.currentIndexForTop(RgbCwControlActivity.this,0,getString(R.string.Rgb_title));
 
 //        绑定viewpager和切换栏
         viewPager2 = findViewById(R.id.index_viewPager);
@@ -110,9 +107,9 @@ public class IndexActivity extends BaseActivity {
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 if (position == 0 ){
-                    topBarModule.currentIndexForTop(IndexActivity.this,0,getString(R.string.Rgb_title));
+                    topBarModule.currentIndexForTop(RgbCwControlActivity.this,0,getString(R.string.Rgb_title));
                 }else if (position == 1){
-                    topBarModule.currentIndexForTop(IndexActivity.this,0,getString(R.string.Cw_title));
+                    topBarModule.currentIndexForTop(RgbCwControlActivity.this,0,getString(R.string.Cw_title));
                 }
             }
         });

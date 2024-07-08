@@ -27,7 +27,7 @@
             android:name="design_height_in_dp"
             android:value="960"/>
         <activity
-            android:name=".Activity.IndexActivity"
+            android:name=".Activity.Control.RgbCwControlActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,7 +38,7 @@
                 android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
                 android:resource="@xml/device_filter" />
         </activity>
-        <activity android:name=".Activity.RemoteActivity" android:exported="true"/>
+        <activity android:name=".Activity.Control.RemoteActivity" android:exported="true"/>
     </application>
 
 </manifest>

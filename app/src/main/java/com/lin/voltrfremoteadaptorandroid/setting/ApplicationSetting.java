@@ -14,4 +14,5 @@ public class ApplicationSetting {
     public static String PRESUPPOSE_SIX_TOUCH_X = "currentTouchX";
     public static String PRESUPPOSE_SIX_TOUCH_Y = "currentTouchY";
     public static String PRESUPPOSE_CW = "cw";
+    public static String LUMINANCE = "luminance";
 }
