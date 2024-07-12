@@ -22,12 +22,15 @@ public class AllOnOffModule extends ConstraintLayout {
     ModuleAllOnOffBinding moduleAllOnOffBinding;
     public AllOnOffModule(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-
-
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        moduleAllOnOffBinding = DataBindingUtil.inflate(layoutInflater,R.layout.module_all_on_off,this,true);
         setClick();
     }
 
+
+
     private void setClick(){
+//        all on的点击事件
       moduleAllOnOffBinding.allOn.setOnClickListener(new OnClickListener() {
           @Override
           public void onClick(View view) {
@@ -35,6 +38,7 @@ public class AllOnOffModule extends ConstraintLayout {
           }
       });
 
+//        all off的点击事件
       moduleAllOnOffBinding.allOff.setOnClickListener(new OnClickListener() {
           @Override
           public void onClick(View view) {
