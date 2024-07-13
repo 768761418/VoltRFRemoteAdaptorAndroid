@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.Control.RgbCwControlActivity"
+    tools:context=".Activity.colorControl.RgbCwControlActivity"
     android:background="@color/bg">
      <com.lin.voltrfremoteadaptorandroid.view.TopBarModule
          android:id="@+id/index_top_bar"

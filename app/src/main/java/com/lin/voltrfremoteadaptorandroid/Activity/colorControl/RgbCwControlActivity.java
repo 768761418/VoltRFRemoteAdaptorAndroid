@@ -1,4 +1,4 @@
-package com.lin.voltrfremoteadaptorandroid.Activity.Control;
+package com.lin.voltrfremoteadaptorandroid.Activity.colorControl;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
@@ -28,7 +28,7 @@ import java.util.List;
 
 public class RgbCwControlActivity extends BaseActivity {
     private String TAG = "RgbCwControlActivity";
-    private PermissionUtils permissionUtils;
+
     private OtgReceiver otgReceiver;
     private IntentFilter filter;
     private TopBarModule topBarModule;
@@ -59,13 +59,11 @@ public class RgbCwControlActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_index);
+        setContentView(R.layout.layout_rgb_cw_control);
         sharedPreferencesUtils =SharedPreferencesUtils.getInstance(RgbCwControlActivity.this);
         //初始化预设
         initPresuppose();
-        //获取权限
-        permissionUtils = new PermissionUtils();
-        permissionUtils.checkPermission(this);
+
         //初始化fragement
         initFgmData();
         //注册otg广播

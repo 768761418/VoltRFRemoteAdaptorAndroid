@@ -20,14 +20,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VoltRFRemoteAdaptorAndroid"
         tools:targetApi="31">
+<!--        强制修改dpi适配-->
         <meta-data
             android:name="design_width_in_dp"
-            android:value="1080"/>
+            android:value="540"/>
         <meta-data
             android:name="design_height_in_dp"
-            android:value="1920"/>
+            android:value="960"/>
+
+
+<!--        修改颜色界面的注册-->
         <activity
-            android:name=".Activity.Control.RgbCwControlActivity"
+            android:name=".Activity.colorControl.RgbCwControlActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,7 +42,7 @@
                 android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
                 android:resource="@xml/device_filter" />
         </activity>
-        <activity android:name=".Activity.Control.RemoteActivity" android:exported="true"/>
+        <activity android:name=".Activity.colorControl.RemoteActivity" android:exported="true"/>
     </application>
 
 </manifest>

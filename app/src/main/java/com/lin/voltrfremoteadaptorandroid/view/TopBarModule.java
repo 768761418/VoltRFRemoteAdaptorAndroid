@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
-import com.lin.voltrfremoteadaptorandroid.Activity.Control.RemoteActivity;
+import com.lin.voltrfremoteadaptorandroid.Activity.colorControl.RemoteActivity;
 import com.lin.voltrfremoteadaptorandroid.R;
 import com.lin.voltrfremoteadaptorandroid.Utils.MessageUtils;
 import com.lin.voltrfremoteadaptorandroid.databinding.ModuleTopBarBinding;

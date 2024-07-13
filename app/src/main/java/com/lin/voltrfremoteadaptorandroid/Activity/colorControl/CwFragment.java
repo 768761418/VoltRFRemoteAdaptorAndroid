@@ -1,4 +1,4 @@
-package com.lin.voltrfremoteadaptorandroid.Activity.Control;
+package com.lin.voltrfremoteadaptorandroid.Activity.colorControl;
 
 import android.graphics.Color;
 

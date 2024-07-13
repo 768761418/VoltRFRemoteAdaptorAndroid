@@ -1,4 +1,4 @@
-package com.lin.voltrfremoteadaptorandroid.Activity.Control;
+package com.lin.voltrfremoteadaptorandroid.Activity.colorControl;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -22,10 +22,6 @@ import com.lin.voltrfremoteadaptorandroid.databinding.FragmentRgbBinding;
 import com.lin.voltrfremoteadaptorandroid.setting.ApplicationSetting;
 import com.lin.voltrfremoteadaptorandroid.view.ColorChooseDialog;
 import com.lin.voltrfremoteadaptorandroid.view.ColorPickerView;
-
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 /**
