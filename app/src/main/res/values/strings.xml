@@ -1,9 +1,13 @@
 <resources>
     <string name="app_name">Volt RF Remote Adaptor</string>
-    
-    <string name="Rgb_title">RGB</string>
-    <string name="Cw_title">CW</string>
-    <string name="Remote_title">Remote Controller</string>
+
+    <string name="title_rgb">RGB</string>
+    <string name="title_cw">CW</string>
+    <string name="title_remote">Remote Controller</string>
+
+    <string name="title_network">Network</string>
+    <string name="title_zone">Zone</string>
+    <string name="title_setting">Settings</string>
 
     <string name="Luminance">Luminance</string>
     <string name="Zone">Zone</string>
@@ -20,7 +24,7 @@
     <string name="luminance_50">50%</string>
     <string name="luminance_75">75%</string>
     <string name="luminance_100">100%</string>
-    
+
     <string name="temperature_2200">2200k</string>
     <string name="temperature_2700">2700k</string>
     <string name="temperature_3000">3000k</string>
@@ -30,5 +34,7 @@
     <string name="remote_strobe">STROBE</string>
     <string name="remote_fade">FADE</string>
     <string name="remote_smooth">SMOOTH</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -32,8 +32,11 @@ public class RemoteActivity extends BaseActivity {
     private void init(){
         layoutRemoteBinding = DataBindingUtil.setContentView(this, R.layout.layout_remote);
         sharedPreferencesUtils = SharedPreferencesUtils.getInstance(RemoteActivity.this);
-//        初始化顶部栏
-        layoutRemoteBinding.remoteTopBar.currentIndexForTop(RemoteActivity.this,1,getString(R.string.Remote_title));
+
+        //        初始化顶部栏
+        layoutRemoteBinding.remoteTopBar.initTopBar(getString(R.string.title_remote),true);
+
+
 
         // 创建一个共享的触摸事件监听器
         touchListener = new View.OnTouchListener() {

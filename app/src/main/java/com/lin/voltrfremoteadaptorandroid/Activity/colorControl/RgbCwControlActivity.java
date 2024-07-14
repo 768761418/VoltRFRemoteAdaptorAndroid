@@ -3,6 +3,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -15,6 +16,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.lin.voltrfremoteadaptorandroid.Activity.BaseActivity;
 import com.lin.voltrfremoteadaptorandroid.Adapter.FgmAdapter;
+import com.lin.voltrfremoteadaptorandroid.Utils.MessageUtils;
 import com.lin.voltrfremoteadaptorandroid.Utils.SharedPreferencesUtils;
 import com.lin.voltrfremoteadaptorandroid.setting.ApplicationSetting;
 import com.lin.voltrfremoteadaptorandroid.setting.ColorSetting;
@@ -37,6 +39,8 @@ public class RgbCwControlActivity extends BaseActivity {
     private ViewPager2 viewPager2;
     private TabLayout tabLayout;
     private SharedPreferencesUtils sharedPreferencesUtils;
+
+    private boolean isClose = true;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -63,7 +67,6 @@ public class RgbCwControlActivity extends BaseActivity {
         sharedPreferencesUtils =SharedPreferencesUtils.getInstance(RgbCwControlActivity.this);
         //初始化预设
         initPresuppose();
-
         //初始化fragement
         initFgmData();
         //注册otg广播
@@ -77,15 +80,44 @@ public class RgbCwControlActivity extends BaseActivity {
     private  void initFgmData(){
 //        初始化顶部栏
         topBarModule= findViewById(R.id.index_top_bar);
-        topBarModule.currentIndexForTop(RgbCwControlActivity.this,0,getString(R.string.Rgb_title));
+        topBarModule.initTopBar(getString(R.string.title_rgb));
+        topBarModule.setIconLeftImg(R.drawable.icon_remote_intent);
+        topBarModule.setIconMidImg(R.drawable.icon_switch_off);
+//        设置启动旧遥控的点击事件
+        topBarModule.setOnLeftIconOnClickListener(new TopBarModule.OnLeftIconOnClickListener() {
+            @Override
+            public void leftIconOnClick() {
+                Intent intent = new Intent(RgbCwControlActivity.this,RemoteActivity.class);
+                startActivity(intent);
+            }
+        });
+        topBarModule.setOnMidIconOnClickListener(new TopBarModule.OnMidIconOnClickListener() {
+            @Override
+            public void midIconOnClick() {
+                if (isClose){
+                    topBarModule.setIconMidImg(R.drawable.icon_switch_on);
+                    isClose = false;
+                    MessageUtils.sendMessageForSwitch(true);
+                }else{
+                    topBarModule.setIconMidImg(R.drawable.icon_switch_off);
+                    isClose = true;
+                    MessageUtils.sendMessageForSwitch(false);
+                }
+            }
+        });
+
+
+
+
+
 
 //        绑定viewpager和切换栏
         viewPager2 = findViewById(R.id.index_viewPager);
         tabLayout  = findViewById(R.id.index_tab_layout);
         FgmAdapter fgmAdapter = new FgmAdapter(getSupportFragmentManager(),getLifecycle(),fragments);
         viewPager2.setAdapter(fgmAdapter);
-        fragments.add(RgbFragment.newInstance("RGB","1"));
-        fragments.add(CwFragment.newInstance("CW","2"));
+        fragments.add(RgbFragment.newInstance("RGB","0"));
+        fragments.add(CwFragment.newInstance("CW","1"));
         tabLayoutData.add("RGB");
         tabLayoutData.add("CW");
 
@@ -105,9 +137,9 @@ public class RgbCwControlActivity extends BaseActivity {
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 if (position == 0 ){
-                    topBarModule.currentIndexForTop(RgbCwControlActivity.this,0,getString(R.string.Rgb_title));
+                    topBarModule.initTopBar(getString(R.string.title_rgb));
                 }else if (position == 1){
-                    topBarModule.currentIndexForTop(RgbCwControlActivity.this,0,getString(R.string.Cw_title));
+                    topBarModule.initTopBar(getString(R.string.title_cw));
                 }
             }
         });

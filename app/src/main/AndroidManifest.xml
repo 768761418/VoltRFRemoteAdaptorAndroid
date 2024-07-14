@@ -5,10 +5,18 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
     <uses-feature android:name="android.hardware.usb.host" />
-    <uses-permission android:name="android.permission.ACCESS_USB"
-        tools:ignore="ProtectedPermissions" />
-
+    <uses-permission android:name="android.permission.ACCESS_USB" tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.USB_PERMISSION" />
+    <!-- 应用使用蓝牙的权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <!--启动设备发现或操作蓝牙设置的权限-->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <!--位置权限-->
+    <!--Android 10以上系统，需要ACCESS_FINE_LOCATION-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!--Android 9以及以下系统，需要ACCESS_FINE_LOCATION-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
 
     <application
         android:allowBackup="true"
@@ -27,11 +35,8 @@
         <meta-data
             android:name="design_height_in_dp"
             android:value="960"/>
-
-
-<!--        修改颜色界面的注册-->
-        <activity
-            android:name=".Activity.colorControl.RgbCwControlActivity"
+<!--        首页-->
+        <activity android:name=".Activity.HomeFgm.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,6 +47,12 @@
                 android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
                 android:resource="@xml/device_filter" />
         </activity>
+
+
+<!--        修改颜色界面的注册-->
+        <activity
+            android:name=".Activity.colorControl.RgbCwControlActivity"
+            android:exported="true"></activity>
         <activity android:name=".Activity.colorControl.RemoteActivity" android:exported="true"/>
     </application>
 
