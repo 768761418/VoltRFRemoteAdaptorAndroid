@@ -1,5 +1,7 @@
 package com.lin.voltrfremoteadaptorandroid;
 
+import android.util.Log;
+
 import com.lin.voltrfremoteadaptorandroid.Utils.BleUtils.BleRssiDevice;
 import com.lin.voltrfremoteadaptorandroid.Utils.BleUtils.MyBleWrapperCallback;
 
@@ -23,6 +25,7 @@ public class MyApplication extends android.app.Application {
         super.onCreate();
         mApplication = this;
         AopArms.init(this);
+        Log.d("Application", "onCreate:上课 ");
         initBle();
     }
     private void initBle() {
