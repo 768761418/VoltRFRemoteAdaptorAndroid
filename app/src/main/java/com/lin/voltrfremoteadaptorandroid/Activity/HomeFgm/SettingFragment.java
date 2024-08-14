@@ -1,15 +1,26 @@
 package com.lin.voltrfremoteadaptorandroid.Activity.HomeFgm;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.lin.voltrfremoteadaptorandroid.Bean.SettingBean;
+import com.lin.voltrfremoteadaptorandroid.Adapter.common.CommonAdapter;
+import com.lin.voltrfremoteadaptorandroid.Adapter.common.CommonViewHolder;
 import com.lin.voltrfremoteadaptorandroid.R;
 import com.lin.voltrfremoteadaptorandroid.databinding.FragmentSettingBinding;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +37,10 @@ public class SettingFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private FragmentSettingBinding fragmentSettingBinding;
+    private CommonAdapter<SettingBean> commonAdapter;
+    private List<SettingBean> settingBeans;
+    private String TAG = "SettingFragment";
+    private String version;
 
     public SettingFragment() {
         // Required empty public constructor
@@ -62,6 +77,66 @@ public class SettingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         fragmentSettingBinding = fragmentSettingBinding.inflate(inflater,container,false);
+        initData();
+        initUI();
         return fragmentSettingBinding.getRoot();
+    }
+
+    private void initData(){
+        settingBeans = new ArrayList<>();
+        settingBeans.add(new SettingBean("联系电话","13543006552"));
+        settingBeans.add(new SettingBean("242","333"));
+
+    }
+
+    private void initUI(){
+        Log.d(TAG, "initUI: " + settingBeans);
+        commonAdapter = new CommonAdapter<SettingBean>(getContext(),settingBeans,R.layout.item_setting) {
+            @Override
+            public void bindData(CommonViewHolder holder, SettingBean data, int position) {
+                holder.setText(R.id.setting_item_name, data.getName());
+                holder.setText(R.id.setting_item_value, data.getValue());
+                holder.setCommonClickListener(new CommonViewHolder.OnCommonItemEventListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Toast.makeText(getContext(),data.getName() +": " + data.getValue(),Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onItemLongClick(int viewId, int position) {
+
+                    }
+                });
+
+
+            }
+        };
+        //禁止滑动  布局管理器
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext()){
+            //禁止竖向滑动 RecyclerView 为垂直状态（VERTICAL）
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+            //禁止横向滑动 RecyclerView 为水平状态（HORIZONTAL）
+            /*@Override
+            public boolean canScrollHorizontally() {
+                return false;
+            }*/
+        };
+        fragmentSettingBinding.settingList.setLayoutManager(linearLayoutManager);
+        fragmentSettingBinding.settingList.setAdapter(commonAdapter);
+        fragmentSettingBinding.settingList.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
+
+
+
+        try {
+            version = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        if (version!= null){
+            fragmentSettingBinding.versionNumber.setText(version);
+        }
     }
 }

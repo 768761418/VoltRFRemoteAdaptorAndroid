@@ -69,42 +69,42 @@ public class CommonBle {
 
 
 
-    //监听蓝牙开关状态
-    private void initBleStatus() {
-        ble.setBleStatusCallback(new BleStatusCallback() {
-            @Override
-            public void onBluetoothStatusChanged(boolean isOn) {
-                BleLog.i(TAG, "onBluetoothStatusOn: 蓝牙是否打开>>>>:" + isOn);
-                llBlutoothAdapterTip.setVisibility(isOn? View.GONE:View.VISIBLE);
-                if (isOn){
-                    checkGpsStatus();
-                }else {
-                    if (ble.isScanning()) {
-                        ble.stopScan();
-                    }
-                }
-            }
-        });
-    }
-    public void initBle(){
-        ble.startScan(scanCallback);
-
-    }
-    private void checkGpsStatus(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && !Utils.isGpsOpen(BleActivity.this)){
-            new AlertDialog.Builder(BleActivity.this)
-                    .setTitle("提示")
-                    .setMessage("为了更精确的扫描到Bluetooth LE设备,请打开GPS定位")
-                    .setPositiveButton("确定", (dialog, which) -> {
-                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                        startActivityForResult(intent,REQUEST_GPS);
-                    })
-                    .setNegativeButton("取消", null)
-                    .create()
-                    .show();
-        }else {
-            ble.startScan(scanCallback);
-        }
-    }
+//    //监听蓝牙开关状态
+//    private void initBleStatus() {
+//        ble.setBleStatusCallback(new BleStatusCallback() {
+//            @Override
+//            public void onBluetoothStatusChanged(boolean isOn) {
+//                BleLog.i(TAG, "onBluetoothStatusOn: 蓝牙是否打开>>>>:" + isOn);
+//                llBlutoothAdapterTip.setVisibility(isOn? View.GONE:View.VISIBLE);
+//                if (isOn){
+//                    checkGpsStatus();
+//                }else {
+//                    if (ble.isScanning()) {
+//                        ble.stopScan();
+//                    }
+//                }
+//            }
+//        });
+//    }
+//    public void initBle(){
+//        ble.startScan(scanCallback);
+//
+//    }
+//    private void checkGpsStatus(){
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+//                && !Utils.isGpsOpen(BleActivity.this)){
+//            new AlertDialog.Builder(BleActivity.this)
+//                    .setTitle("提示")
+//                    .setMessage("为了更精确的扫描到Bluetooth LE设备,请打开GPS定位")
+//                    .setPositiveButton("确定", (dialog, which) -> {
+//                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+//                        startActivityForResult(intent,REQUEST_GPS);
+//                    })
+//                    .setNegativeButton("取消", null)
+//                    .create()
+//                    .show();
+//        }else {
+//            ble.startScan(scanCallback);
+//        }
+//    }
 }

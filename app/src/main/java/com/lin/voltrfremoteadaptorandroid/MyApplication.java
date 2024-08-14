@@ -24,6 +24,7 @@ public class MyApplication extends android.app.Application {
     public void onCreate() {
         super.onCreate();
         mApplication = this;
+//        初始化蓝牙
         AopArms.init(this);
         Log.d("Application", "onCreate:上课 ");
         initBle();

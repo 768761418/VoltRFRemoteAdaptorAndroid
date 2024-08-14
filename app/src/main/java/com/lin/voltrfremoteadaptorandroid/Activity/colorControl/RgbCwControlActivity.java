@@ -6,6 +6,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.hardware.usb.UsbManager;
 import android.os.Bundle;
@@ -28,6 +29,8 @@ import com.lin.voltrfremoteadaptorandroid.Utils.PermissionUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.jessyan.autosize.AutoSizeCompat;
+
 public class RgbCwControlActivity extends BaseActivity {
     private String TAG = "RgbCwControlActivity";
 
@@ -41,6 +44,12 @@ public class RgbCwControlActivity extends BaseActivity {
     private SharedPreferencesUtils sharedPreferencesUtils;
 
     private boolean isClose = true;
+
+    @Override
+    public Resources getResources() {
+        AutoSizeCompat.autoConvertDensityOfGlobal((super.getResources()));//如果没有自定义需求用这个方法
+        return super.getResources();
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

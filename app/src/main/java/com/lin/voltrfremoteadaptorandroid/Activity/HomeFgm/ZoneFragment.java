@@ -7,9 +7,18 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.lin.voltrfremoteadaptorandroid.Adapter.common.CommonAdapter;
+import com.lin.voltrfremoteadaptorandroid.Adapter.common.CommonViewHolder;
+import com.lin.voltrfremoteadaptorandroid.Bean.ZoneBean;
 import com.lin.voltrfremoteadaptorandroid.R;
 import com.lin.voltrfremoteadaptorandroid.databinding.FragmentZoneBinding;
+import com.lin.voltrfremoteadaptorandroid.db.ZoneDb;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +35,8 @@ public class ZoneFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private FragmentZoneBinding fragmentZoneBinding;
+    private CommonAdapter<ZoneDb> zoneDbCommonAdapter;
+    private List<ZoneDb> zoneDbs;
 
     public ZoneFragment() {
         // Required empty public constructor
@@ -62,7 +73,38 @@ public class ZoneFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         fragmentZoneBinding = fragmentZoneBinding.inflate(inflater,container,false);
+        initData();
+        initUi();
         // Inflate the layout for this fragment
         return fragmentZoneBinding.getRoot();
+    }
+
+
+    private void initData(){
+        zoneDbs = new ArrayList<>();
+    }
+
+    private void initUi(){
+        zoneDbCommonAdapter = new CommonAdapter<ZoneDb>(getContext(),zoneDbs,R.layout.item_zone) {
+            @Override
+            public void bindData(CommonViewHolder holder, ZoneDb data, int position) {
+                holder.setText(R.id.zone_item_name, data.getZoneName());
+                holder.setViewImageRes(R.id.zone_item_logo,R.drawable.icon_zone_item);
+            }
+        };
+        fragmentZoneBinding.zoneList.setAdapter(zoneDbCommonAdapter);
+
+
+//        添加的点击事件
+        fragmentZoneBinding.zoneBtnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                ZoneDb zoneDb = new ZoneDb();
+//
+//                zoneDb.save();
+
+            }
+        });
+
     }
 }

@@ -1,5 +1,6 @@
 package com.lin.voltrfremoteadaptorandroid.Activity.HomeFgm;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,8 @@ import com.lin.voltrfremoteadaptorandroid.databinding.LayoutHomeBinding;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.jessyan.autosize.AutoSizeCompat;
+
 public class HomeActivity extends BaseActivity {
     private LayoutHomeBinding layoutHomeBinding;
     private List<Fragment> fragments = new ArrayList<>();
@@ -30,6 +33,12 @@ public class HomeActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initUI();
+    }
+
+    @Override
+    public Resources getResources() {
+        AutoSizeCompat.autoConvertDensityOfGlobal((super.getResources()));//如果没有自定义需求用这个方法
+        return super.getResources();
     }
 
     private void initUI(){
