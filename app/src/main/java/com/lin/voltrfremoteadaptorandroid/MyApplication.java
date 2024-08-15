@@ -13,6 +13,32 @@ import cn.com.heaton.blelibrary.ble.model.BleFactory;
 import cn.com.heaton.blelibrary.ble.utils.UuidUtils;
 import cn.com.superLei.aoparms.AopArms;
 
+
+/**
+ * 应用入口
+ * 　　　　　　　　┏┓　　　┏┓
+ * 　　　　　　　┏┛┻━━━┛┻┓
+ * 　　　　　　　┃　　　　　　　┃
+ * 　　　　　　　┃　　　━　　　┃
+ * 　　　　　　　┃　＞　　　＜　┃
+ * 　　　　　　　┃　　　　　　　┃
+ * 　　　　　　　┃...　⌒　...　┃
+ * 　　　　　　　┃　　　　　　　┃
+ * 　　　　　　　┗━┓　　　┏━┛
+ * 　　　　　　　　　┃　　　┃　Code is far away from bug with the animal protecting
+ * 　　　　　　　　　┃　　　┃   神兽保佑,代码无bug
+ * 　　　　　　　　　┃　　　┃
+ * 　　　　　　　　　┃　　　┃
+ * 　　　　　　　　　┃　　　┃
+ * 　　　　　　　　　┃　　　┃
+ * 　　　　　　　　　┃　　　┗━━━┓
+ * 　　　　　　　　　┃　　　　　　　┣┓
+ * 　　　　　　　　　┃　　　　　　　┏┛
+ * 　　　　　　　　　┗┓┓┏━┳┓┏┛
+ * 　　　　　　　　　　┃┫┫　┃┫┫
+ * 　　　　　　　　　　┗┻┛　┗┻┛
+ */
+
 public class MyApplication extends android.app.Application {
     private static MyApplication mApplication;
 

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
@@ -92,6 +93,9 @@ public class TopBarModule extends LinearLayout {
          moduleTopBarBinding.iconLeft.setVisibility(VISIBLE);
          moduleTopBarBinding.iconLeft.setImageResource(imgId);
     }
+    public ImageView iconLeftImg(){
+        return  moduleTopBarBinding.iconLeft;
+    }
     public void hideIconLeftImg(){
         moduleTopBarBinding.iconLeft.setVisibility(INVISIBLE);
     }
@@ -108,6 +112,11 @@ public class TopBarModule extends LinearLayout {
         moduleTopBarBinding.iconRight.setVisibility(VISIBLE);
         moduleTopBarBinding.iconRight.setImageResource(imgId);
     }
+    public ImageView iconRightImg(){
+        return moduleTopBarBinding.iconRight;
+    }
+
+
     public void hideIconRightImg(){
         moduleTopBarBinding.iconRight.setVisibility(INVISIBLE);
     }

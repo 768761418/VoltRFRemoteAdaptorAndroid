@@ -57,6 +57,7 @@
                 android:resource="@xml/device_filter" />
         </activity>
 
+        <activity android:name=".Activity.BleActivity" android:exported="true" android:attributionTags="蓝牙链接界面"/>
 
 <!--        修改颜色界面的注册-->
         <activity

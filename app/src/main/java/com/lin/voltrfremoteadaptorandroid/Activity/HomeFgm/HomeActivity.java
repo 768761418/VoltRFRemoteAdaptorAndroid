@@ -1,7 +1,9 @@
 package com.lin.voltrfremoteadaptorandroid.Activity.HomeFgm;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,6 +14,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.lin.voltrfremoteadaptorandroid.Activity.BaseActivity;
+import com.lin.voltrfremoteadaptorandroid.Activity.BleActivity;
 import com.lin.voltrfremoteadaptorandroid.Activity.HomeFgm.NetworkFragment;
 import com.lin.voltrfremoteadaptorandroid.Activity.HomeFgm.SettingFragment;
 import com.lin.voltrfremoteadaptorandroid.Activity.HomeFgm.ZoneFragment;
@@ -75,6 +78,15 @@ public class HomeActivity extends BaseActivity {
                 if (position == 0 ){
                     layoutHomeBinding.topBar.initTopBar(getString(R.string.title_network));
                     layoutHomeBinding.topBar.setIconRightImg(R.drawable.icon_add);
+                    layoutHomeBinding.topBar.iconRightImg().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(HomeActivity.this, BleActivity.class);
+                            startActivity(intent);
+
+                        }
+                    });
+
                 }else if (position == 1){
                     layoutHomeBinding.topBar.initTopBar(getString(R.string.title_zone));
                     layoutHomeBinding.topBar.hideIconRightImg();
