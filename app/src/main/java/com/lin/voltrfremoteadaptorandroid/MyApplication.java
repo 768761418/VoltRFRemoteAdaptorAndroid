@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.lin.voltrfremoteadaptorandroid.Utils.BleUtils.BleRssiDevice;
 import com.lin.voltrfremoteadaptorandroid.Utils.BleUtils.MyBleWrapperCallback;
+import com.orm.SugarContext;
 
 import java.util.UUID;
 
@@ -50,11 +51,24 @@ public class MyApplication extends android.app.Application {
     public void onCreate() {
         super.onCreate();
         mApplication = this;
+
+        // 初始化 SugarORM
+        SugarContext.init(this);
+
 //        初始化蓝牙
         AopArms.init(this);
         Log.d("Application", "onCreate:上课 ");
         initBle();
     }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        // 终止 SugarORM
+        SugarContext.terminate();
+    }
+
+
     private void initBle() {
         Ble.options()
                 .setLogBleEnable(true)//设置是否输出打印蓝牙日志

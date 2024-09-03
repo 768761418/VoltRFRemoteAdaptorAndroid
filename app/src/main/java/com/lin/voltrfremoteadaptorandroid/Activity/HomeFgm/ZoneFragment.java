@@ -1,9 +1,10 @@
-package com.lin.voltrfremoteadaptorandroid.Activity.HomeFgm;
+package com.lin.voltrfremoteadaptorandroid.Activity.homeFgm;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,7 @@ public class ZoneFragment extends Fragment {
     private FragmentZoneBinding fragmentZoneBinding;
     private CommonAdapter<ZoneDb> zoneDbCommonAdapter;
     private List<ZoneDb> zoneDbs;
+    private String TAG = "ZoneFragment";
 
     public ZoneFragment() {
         // Required empty public constructor
@@ -81,7 +83,8 @@ public class ZoneFragment extends Fragment {
 
 
     private void initData(){
-        zoneDbs = new ArrayList<>();
+        zoneDbs = ZoneDb.getAllZones();
+        Log.d(TAG, "initData: " + zoneDbs);
     }
 
     private void initUi(){
@@ -90,19 +93,38 @@ public class ZoneFragment extends Fragment {
             public void bindData(CommonViewHolder holder, ZoneDb data, int position) {
                 holder.setText(R.id.zone_item_name, data.getZoneName());
                 holder.setViewImageRes(R.id.zone_item_logo,R.drawable.icon_zone_item);
+
+                holder.setCommonClickListener(new CommonViewHolder.OnCommonItemEventListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+
+                    }
+
+                    @Override
+                    public void onItemLongClick(int viewId, int position) {
+
+                    }
+                });
+
+
+
             }
         };
         fragmentZoneBinding.zoneList.setAdapter(zoneDbCommonAdapter);
-
 
 //        添加的点击事件
         fragmentZoneBinding.zoneBtnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                ZoneDb zoneDb = new ZoneDb();
-//
-//                zoneDb.save();
-
+//                获取长度判断默认名字
+                int current = zoneDbs.size()+1;
+                String newZoneName = "zone" + current;
+//                保存到数据库
+                ZoneDb zoneDb = new ZoneDb(newZoneName);
+                zoneDb.save();
+//                添加到数据列表中，刷新数据
+                zoneDbs.add(zoneDb);
+                zoneDbCommonAdapter.notifyDataSetChanged();
             }
         });
 

@@ -1,4 +1,4 @@
-package com.lin.voltrfremoteadaptorandroid.Activity.HomeFgm;
+package com.lin.voltrfremoteadaptorandroid.Activity.homeFgm;
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,8 +85,8 @@ public class SettingFragment extends Fragment {
 
     private void initData(){
         settingBeans = new ArrayList<>();
-        settingBeans.add(new SettingBean("联系电话","13543006552"));
-        settingBeans.add(new SettingBean("242","333"));
+        settingBeans.add(new SettingBean("WebSite","13543006552"));
+        settingBeans.add(new SettingBean("Contact","Tele Num"));
 
     }
 
@@ -126,9 +127,24 @@ public class SettingFragment extends Fragment {
         };
         fragmentSettingBinding.settingList.setLayoutManager(linearLayoutManager);
         fragmentSettingBinding.settingList.setAdapter(commonAdapter);
+//        添加分割线
         fragmentSettingBinding.settingList.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
-
-
+//        计算recycle子项大小设置recycle大小
+//        int listHeightDp  = settingBeans.size()*60;
+//        // 将 dp 转换为 px
+//        int listHeightPx = (int) TypedValue.applyDimension(
+//                TypedValue.COMPLEX_UNIT_DIP, // 使用 dp 单位
+//                listHeightDp,                // dp 的值
+//                getContext().getResources().getDisplayMetrics() // 当前设备的显示指标
+//        );
+//        // 获取组件的当前布局参数
+//        ViewGroup.LayoutParams layoutParams = fragmentSettingBinding.settingList.getLayoutParams();
+//
+//        // 设置宽度为 listHeight
+//        layoutParams.width = listHeightPx;
+//
+//        // 将更新后的布局参数重新设置回组件
+//        fragmentSettingBinding.settingList.setLayoutParams(layoutParams);
 
         try {
             version = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0).versionName;
