@@ -15,6 +15,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.lin.voltrfremoteadaptorandroid.Activity.BaseActivity;
 import com.lin.voltrfremoteadaptorandroid.Activity.BleActivity;
+import com.lin.voltrfremoteadaptorandroid.Activity.homeFgm.zone.ZoneFragment;
 import com.lin.voltrfremoteadaptorandroid.Adapter.FgmAdapter;
 import com.lin.voltrfremoteadaptorandroid.R;
 import com.lin.voltrfremoteadaptorandroid.databinding.LayoutHomeBinding;

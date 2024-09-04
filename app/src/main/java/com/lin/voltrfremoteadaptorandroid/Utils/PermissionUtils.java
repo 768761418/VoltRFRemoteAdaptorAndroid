@@ -16,6 +16,10 @@ public class PermissionUtils {
     private String[] permission = {
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.BLUETOOTH,
+            Manifest.permission.BLUETOOTH_SCAN,
+            Manifest.permission.BLUETOOTH_CONNECT,
+            Manifest.permission.BLUETOOTH_ADMIN
     };
 
     private List<String> permissionList = new ArrayList<>();

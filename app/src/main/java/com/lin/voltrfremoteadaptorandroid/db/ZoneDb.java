@@ -45,6 +45,7 @@ public class ZoneDb extends SugarRecord{
         this.save(); // 保存更改
     }
 
+//    public void
 
 
 }

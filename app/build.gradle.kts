@@ -42,6 +42,9 @@ dependencies {
     implementation ("com.github.mik3y:usb-serial-for-android:3.7.0")
     implementation ("androidx.viewpager2:viewpager2:1.0.0")
     implementation ("com.github.JessYanCoding:AndroidAutoSize:v1.2.1")
-    implementation ("com.github.aicareles:Android-BLE:3.3.0")
-    implementation ("cn.com.superLei:aop-arms:1.0.4")
+//    implementation ("com.github.aicareles:Android-BLE:3.3.0")
+//    implementation ("cn.com.superLei:aop-arms:1.0.4")
+    implementation ("com.vise.xiaoyaoyou:baseble:2.0.6")
+    implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.23")
+
 }

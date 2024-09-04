@@ -1,4 +1,4 @@
-package com.lin.voltrfremoteadaptorandroid.Activity.HomeFgm;
+package com.lin.voltrfremoteadaptorandroid.Activity.homeFgm;
 
 import android.os.Bundle;
 

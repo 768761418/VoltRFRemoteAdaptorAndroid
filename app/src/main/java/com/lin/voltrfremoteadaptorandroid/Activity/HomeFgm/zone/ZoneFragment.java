@@ -1,5 +1,6 @@
-package com.lin.voltrfremoteadaptorandroid.Activity.homeFgm;
+package com.lin.voltrfremoteadaptorandroid.Activity.homeFgm.zone;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,17 +9,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.lin.voltrfremoteadaptorandroid.Adapter.common.CommonAdapter;
 import com.lin.voltrfremoteadaptorandroid.Adapter.common.CommonViewHolder;
-import com.lin.voltrfremoteadaptorandroid.Bean.ZoneBean;
 import com.lin.voltrfremoteadaptorandroid.R;
 import com.lin.voltrfremoteadaptorandroid.databinding.FragmentZoneBinding;
 import com.lin.voltrfremoteadaptorandroid.db.ZoneDb;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -97,7 +93,10 @@ public class ZoneFragment extends Fragment {
                 holder.setCommonClickListener(new CommonViewHolder.OnCommonItemEventListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-
+                        Intent intent = new Intent(getContext(), ZoneDetailActivity.class);
+                        intent.putExtra("zoneName",data.getZoneName());
+                        intent.putExtra("zoneId",data.getId());
+                        startActivity(intent);
                     }
 
                     @Override

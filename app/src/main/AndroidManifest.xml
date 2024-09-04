@@ -7,10 +7,17 @@
     <uses-feature android:name="android.hardware.usb.host" />
     <uses-permission android:name="android.permission.ACCESS_USB" tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.USB_PERMISSION" />
+
     <!-- 应用使用蓝牙的权限 -->
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <!--启动设备发现或操作蓝牙设置的权限-->
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <!--扫描权限-->
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"/>
+    <!--连接权限-->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
+    <!-- 用于广播蓝牙广告的权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE"/>
     <!--位置权限-->
     <!--Android 10以上系统，需要ACCESS_FINE_LOCATION-->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -58,7 +65,7 @@
         </activity>
 
         <activity android:name=".Activity.BleActivity" android:exported="true" android:attributionTags="蓝牙链接界面"/>
-
+        <activity android:name=".Activity.homeFgm.zone.ZoneDetailActivity" android:exported="true" android:attributionTags="zone选择页"/>
 
 <!--        修改颜色界面的注册-->
         <activity android:name=".Activity.colorControl.RgbCwControlActivity" android:exported="true" android:attributionTags="修改颜色的部分"/>
