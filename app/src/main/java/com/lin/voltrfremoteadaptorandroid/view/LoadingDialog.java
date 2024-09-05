@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.widget.TextView;
 
 import com.lin.voltrfremoteadaptorandroid.R;
+
+import org.w3c.dom.Text;
 
 import pl.droidsonroids.gif.GifImageView;
 
@@ -29,8 +32,10 @@ public class LoadingDialog {
     public void show() {
         View view = LayoutInflater.from(dialog.getContext()).inflate(R.layout.dialog_loading, null);
         GifImageView gifImageView = view.findViewById(R.id.loading_gif);
+        TextView textView = view.findViewById(R.id.loading_text);
         // You can set a GIF programmatically if needed
-         gifImageView.setImageResource(R.drawable.gif_loading);
+        textView.setText(text);
+        gifImageView.setImageResource(resourceId);
 
         dialog.setContentView(view);
         dialog.show();

@@ -13,7 +13,7 @@
     <!--启动设备发现或操作蓝牙设置的权限-->
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
     <!--扫描权限-->
-    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" android:usesPermissionFlags="neverForLocation"/>
     <!--连接权限-->
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
     <!-- 用于广播蓝牙广告的权限 -->

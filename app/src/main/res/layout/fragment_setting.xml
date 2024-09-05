@@ -74,7 +74,7 @@
                 android:layout_width="480dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/bg_setting_ng"
+                android:background="@drawable/btn_common"
                 app:layout_constraintTop_toBottomOf="@id/setting_version"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"

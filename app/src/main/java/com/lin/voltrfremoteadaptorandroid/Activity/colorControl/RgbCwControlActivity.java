@@ -51,23 +51,23 @@ public class RgbCwControlActivity extends BaseActivity {
         return super.getResources();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PermissionUtils.REQUEST_CODE){
-            for (int i = 0; i < grantResults.length; i++) {
-//                如果没请求成功，在这写
-                if (grantResults[i] != PackageManager.PERMISSION_GRANTED){
-//                    弹出提示
-                    Toast.makeText(RgbCwControlActivity.this, "Please grant sufficient permissions to ensure the proper functioning of the app", Toast.LENGTH_SHORT).show();
-                }
-//                如果请求成功在这写
-                else {
-
-                }
-            }
-        }
-    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        if (requestCode == PermissionUtils.REQUEST_CODE){
+//            for (int i = 0; i < grantResults.length; i++) {
+////                如果没请求成功，在这写
+//                if (grantResults[i] != PackageManager.PERMISSION_GRANTED){
+////                    弹出提示
+//                    Toast.makeText(RgbCwControlActivity.this, "Please grant sufficient permissions to ensure the proper functioning of the app", Toast.LENGTH_SHORT).show();
+//                }
+////                如果请求成功在这写
+//                else {
+//
+//                }
+//            }
+//        }
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +89,7 @@ public class RgbCwControlActivity extends BaseActivity {
     private  void initFgmData(){
 //        初始化顶部栏
         topBarModule= findViewById(R.id.index_top_bar);
-        topBarModule.initTopBar(getString(R.string.title_rgb));
+        topBarModule.initTopBar(getString(R.string.title_rgb),true);
         topBarModule.setIconLeftImg(R.drawable.icon_remote_intent);
         topBarModule.setIconMidImg(R.drawable.icon_switch_off);
 //        设置启动旧遥控的点击事件
@@ -146,9 +146,9 @@ public class RgbCwControlActivity extends BaseActivity {
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 if (position == 0 ){
-                    topBarModule.initTopBar(getString(R.string.title_rgb));
+                    topBarModule.initTopBar(getString(R.string.title_rgb),true);
                 }else if (position == 1){
-                    topBarModule.initTopBar(getString(R.string.title_cw));
+                    topBarModule.initTopBar(getString(R.string.title_cw),true);
                 }
             }
         });

@@ -3,6 +3,7 @@ package com.lin.voltrfremoteadaptorandroid.Activity.homeFgm.zone;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -12,6 +13,8 @@ import android.view.ViewGroup;
 
 import com.lin.voltrfremoteadaptorandroid.Adapter.common.CommonAdapter;
 import com.lin.voltrfremoteadaptorandroid.Adapter.common.CommonViewHolder;
+import com.lin.voltrfremoteadaptorandroid.ConfigData;
+import com.lin.voltrfremoteadaptorandroid.MyApplication;
 import com.lin.voltrfremoteadaptorandroid.R;
 import com.lin.voltrfremoteadaptorandroid.databinding.FragmentZoneBinding;
 import com.lin.voltrfremoteadaptorandroid.db.ZoneDb;
@@ -67,6 +70,7 @@ public class ZoneFragment extends Fragment {
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -96,7 +100,7 @@ public class ZoneFragment extends Fragment {
                         Intent intent = new Intent(getContext(), ZoneDetailActivity.class);
                         intent.putExtra("zoneName",data.getZoneName());
                         intent.putExtra("zoneId",data.getId());
-                        startActivity(intent);
+                        startActivityForResult(intent, ConfigData.DEFAULT_REQUEST_CODE);
                     }
 
                     @Override
@@ -127,5 +131,26 @@ public class ZoneFragment extends Fragment {
             }
         });
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == ConfigData.UPDATE_RESULT_CODE){
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    zoneDbs.clear();
+                    initData();
+                    zoneDbCommonAdapter.notifyDataSetChanged();  // 通知数据更新
+                }
+            });
+
+//            zoneDbs.clear();
+//
+//            zoneDbCommonAdapter.notifyDataSetChanged();
+//            zoneDbCommonAdapter.notifyItemRangeChanged(0, zoneDbs.size());
+
+        }
     }
 }

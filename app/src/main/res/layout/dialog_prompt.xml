@@ -7,11 +7,7 @@
     android:background="@color/dialog_show_bg"
     android:gravity="center">
 
-    <pl.droidsonroids.gif.GifImageView
-        android:id="@+id/loading_gif"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/gif_loading" />
+
     <TextView
         android:id="@+id/loading_text"
         android:layout_width="wrap_content"
