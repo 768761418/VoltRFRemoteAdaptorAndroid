@@ -48,4 +48,7 @@ dependencies {
     implementation ("com.vise.xiaoyaoyou:baseble:2.0.6")
     implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.23")
 
+
+//    implementation ("no.nordicsemi.android:mesh:3.3.4")
+
 }

@@ -33,21 +33,12 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
-    private void initPermission(){
+    public void initPermission(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
             XXPermissions.with(this)
-//                    .permission(Permission.ACCESS_COARSE_LOCATION)
-//                蓝牙权限
+                    // 蓝牙权限
                     .permission(Permission.Group.BLUETOOTH)
                     // 申请多个权限
-//                    .permission(Permission.READ_MEDIA_IMAGES)
-//                    .permission(Permission.READ_MEDIA_VIDEO)
-//                    .permission(Permission.READ_MEDIA_AUDIO)
-
-                    // 设置权限请求拦截器（局部设置）
-                    //.interceptor(new PermissionInterceptor())
-                    // 设置不触发错误检测机制（局部设置）
-                    //.unchecked()
                     .request(new OnPermissionCallback() {
 
                         @Override

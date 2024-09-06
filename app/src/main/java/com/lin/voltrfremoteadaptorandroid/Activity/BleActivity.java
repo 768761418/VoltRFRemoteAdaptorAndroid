@@ -9,10 +9,13 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
+import com.hjq.permissions.Permission;
+import com.hjq.permissions.XXPermissions;
 import com.lin.voltrfremoteadaptorandroid.Adapter.common.CommonAdapter;
 import com.lin.voltrfremoteadaptorandroid.Adapter.common.CommonViewHolder;
 import com.lin.voltrfremoteadaptorandroid.R;
 import com.lin.voltrfremoteadaptorandroid.databinding.LayoutBleBinding;
+import com.lin.voltrfremoteadaptorandroid.db.BleDb;
 import com.lin.voltrfremoteadaptorandroid.view.LoadingDialog;
 import com.vise.baseble.ViseBle;
 import com.vise.baseble.callback.IConnectCallback;
@@ -26,10 +29,11 @@ import com.vise.baseble.model.BluetoothLeDeviceStore;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class BleActivity extends BaseActivity{
     private LayoutBleBinding layoutBleBinding;
     private final String TAG = "BleActivity";
-    private List<BluetoothLeDevice> bleList ;
+    private List<BluetoothLeDevice>  bleList = new ArrayList<>();
     private CommonAdapter<BluetoothLeDevice> commonAdapter;
     private LoadingDialog loadingDialog;
 
@@ -39,13 +43,23 @@ public class BleActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
         layoutBleBinding = DataBindingUtil.setContentView(BleActivity.this, R.layout.layout_ble);
         loadingDialog = new LoadingDialog(this,R.drawable.gif_loading,"Bluetooth is connecting");
-        initData();
-        initUI();
+        if ( XXPermissions.isGranted(this, Permission.Group.BLUETOOTH)){
+            initData();
+            initUI();
+        }else {
+            initPermission();
+        }
+
+        layoutBleBinding.demo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClickble: " + ViseBle.getInstance().getDeviceMirrorPool().getDeviceList());
+            }
+        });
     }
 
 
     private void initData(){
-        bleList = new ArrayList<>();
 
         commonAdapter = new CommonAdapter<BluetoothLeDevice>(BleActivity.this,bleList,R.layout.item_ble) {
             @Override
@@ -77,6 +91,9 @@ public class BleActivity extends BaseActivity{
             public void onDeviceFound(BluetoothLeDevice bluetoothLeDevice) {
                 Log.d(TAG, "onDeviceFound: "  + bluetoothLeDevice.getName());
                 if (bluetoothLeDevice.getName() != null){
+//                     TODO 判断是否在蓝牙连接池中，如果在的话就不显示
+
+
                     // 检查列表中是否已存在该设备
                     boolean deviceExists = false;
                     for (BluetoothLeDevice device : bleList) {
@@ -106,6 +123,8 @@ public class BleActivity extends BaseActivity{
 
             }
         }));
+
+//        MeshManagerApi mMeshManagerApi = new MeshManagerApi(context);
     }
 
     private void initUI(){
@@ -115,14 +134,26 @@ public class BleActivity extends BaseActivity{
 
 
     private void bleConnect(BluetoothLeDevice bluetoothLeDevice){
+        Log.d(TAG, "bleConnect: ");
+
+
         ViseBle.getInstance().connect(bluetoothLeDevice, new IConnectCallback() {
             @Override
             public void onConnectSuccess(DeviceMirror deviceMirror) {
+                BleDb bleDb = new BleDb(
+                        deviceMirror.getBluetoothLeDevice().getName(),
+                        deviceMirror.getBluetoothLeDevice().getAddress(),
+                        deviceMirror.getBluetoothLeDevice().getBluetoothDeviceClassName(),
+                        deviceMirror.getBluetoothLeDevice().getBluetoothDeviceMajorClassName()
+                );
+                bleDb.save();
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         Toast.makeText(BleActivity.this,"Bluetooth connect",Toast.LENGTH_SHORT).show();
                         loadingDialog.dismiss();
+                        finish();
                     }
                 });
 
