@@ -36,13 +36,13 @@ public class BaseActivity extends AppCompatActivity {
     private void initPermission(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
             XXPermissions.with(this)
-                    .permission(Permission.ACCESS_COARSE_LOCATION)
+//                    .permission(Permission.ACCESS_COARSE_LOCATION)
 //                蓝牙权限
                     .permission(Permission.Group.BLUETOOTH)
                     // 申请多个权限
-                    .permission(Permission.READ_MEDIA_IMAGES)
-                    .permission(Permission.READ_MEDIA_VIDEO)
-                    .permission(Permission.READ_MEDIA_AUDIO)
+//                    .permission(Permission.READ_MEDIA_IMAGES)
+//                    .permission(Permission.READ_MEDIA_VIDEO)
+//                    .permission(Permission.READ_MEDIA_AUDIO)
 
                     // 设置权限请求拦截器（局部设置）
                     //.interceptor(new PermissionInterceptor())
@@ -72,12 +72,12 @@ public class BaseActivity extends AppCompatActivity {
                     });
         }else {
             XXPermissions.with(this)
-                    .permission(Permission.ACCESS_COARSE_LOCATION)
+//                    .permission(Permission.ACCESS_COARSE_LOCATION)
 //                蓝牙权限
                     .permission(Permission.Group.BLUETOOTH)
                     // 申请多个权限
-                    .permission(Permission.MANAGE_EXTERNAL_STORAGE)
-                    .permission(Permission.Group.STORAGE)
+//                    .permission(Permission.MANAGE_EXTERNAL_STORAGE)
+//                    .permission(Permission.Group.STORAGE)
 
                     // 设置权限请求拦截器（局部设置）
                     //.interceptor(new PermissionInterceptor())

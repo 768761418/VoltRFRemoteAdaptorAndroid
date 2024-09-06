@@ -2,6 +2,7 @@ package com.lin.voltrfremoteadaptorandroid.view;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,10 @@ public class LoadingDialog {
         // You can set a GIF programmatically if needed
         textView.setText(text);
         gifImageView.setImageResource(resourceId);
+
+        // 设置Dialog的背景为透明
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+
 
         dialog.setContentView(view);
         dialog.show();

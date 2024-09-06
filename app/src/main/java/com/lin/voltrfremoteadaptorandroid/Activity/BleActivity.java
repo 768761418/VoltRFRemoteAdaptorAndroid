@@ -4,6 +4,7 @@ package com.lin.voltrfremoteadaptorandroid.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -12,9 +13,13 @@ import com.lin.voltrfremoteadaptorandroid.Adapter.common.CommonAdapter;
 import com.lin.voltrfremoteadaptorandroid.Adapter.common.CommonViewHolder;
 import com.lin.voltrfremoteadaptorandroid.R;
 import com.lin.voltrfremoteadaptorandroid.databinding.LayoutBleBinding;
+import com.lin.voltrfremoteadaptorandroid.view.LoadingDialog;
 import com.vise.baseble.ViseBle;
+import com.vise.baseble.callback.IConnectCallback;
 import com.vise.baseble.callback.scan.IScanCallback;
 import com.vise.baseble.callback.scan.ScanCallback;
+import com.vise.baseble.core.DeviceMirror;
+import com.vise.baseble.exception.BleException;
 import com.vise.baseble.model.BluetoothLeDevice;
 import com.vise.baseble.model.BluetoothLeDeviceStore;
 
@@ -26,12 +31,14 @@ public class BleActivity extends BaseActivity{
     private final String TAG = "BleActivity";
     private List<BluetoothLeDevice> bleList ;
     private CommonAdapter<BluetoothLeDevice> commonAdapter;
+    private LoadingDialog loadingDialog;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         layoutBleBinding = DataBindingUtil.setContentView(BleActivity.this, R.layout.layout_ble);
+        loadingDialog = new LoadingDialog(this,R.drawable.gif_loading,"Bluetooth is connecting");
         initData();
         initUI();
     }
@@ -51,7 +58,8 @@ public class BleActivity extends BaseActivity{
                 holder.setCommonClickListener(new CommonViewHolder.OnCommonItemEventListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-
+                        loadingDialog.show();
+                        bleConnect(data);
                     }
 
                     @Override
@@ -90,6 +98,7 @@ public class BleActivity extends BaseActivity{
             @Override
             public void onScanFinish(BluetoothLeDeviceStore bluetoothLeDeviceStore) {
                 Log.d(TAG, "onScanFinish: " +bleList);
+                Toast.makeText(BleActivity.this,"Bluetooth scan complete",Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -102,6 +111,40 @@ public class BleActivity extends BaseActivity{
     private void initUI(){
         layoutBleBinding.topBar.initTopBar("Bluetooth",true);
         layoutBleBinding.bleList.setAdapter(commonAdapter);
+    }
+
+
+    private void bleConnect(BluetoothLeDevice bluetoothLeDevice){
+        ViseBle.getInstance().connect(bluetoothLeDevice, new IConnectCallback() {
+            @Override
+            public void onConnectSuccess(DeviceMirror deviceMirror) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(BleActivity.this,"Bluetooth connect",Toast.LENGTH_SHORT).show();
+                        loadingDialog.dismiss();
+                    }
+                });
+
+            }
+
+            @Override
+            public void onConnectFailure(BleException exception) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(BleActivity.this,"Bluetooth connect fail" + exception,Toast.LENGTH_SHORT).show();
+                        loadingDialog.dismiss();
+                    }
+                });
+
+            }
+
+            @Override
+            public void onDisconnect(boolean isActive) {
+
+            }
+        });
     }
 
 
