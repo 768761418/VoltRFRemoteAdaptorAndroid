@@ -4,17 +4,84 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp"
-    android:background="@color/dialog_show_bg"
     android:gravity="center">
 
+    <LinearLayout
+        android:layout_width="380dp"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:background="@drawable/btn_common"
+        android:paddingTop="10dp"
+        android:gravity="center">
 
-    <TextView
-        android:id="@+id/loading_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="connect"
-        android:layout_marginTop="10dp"
-        android:textSize="25sp"
-        android:textColor="@color/white"/>
+        <TextView
+            android:id="@+id/prompt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="prompt"
+            android:textStyle="bold"
+            android:textSize="30sp"
+            android:layout_weight="1"
+            android:textColor="@color/white"/>
+        <TextView
+            android:id="@+id/prompt_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="this is the message for user to setting"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:layout_marginTop="15dp"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:textColor="@color/white"/>
+
+
+<!--        按鈕部分-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="30dp"
+            android:background="#9f9393"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:gravity="center_vertical"
+            android:layout_weight="1"
+            android:showDividers="middle"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/prompt_left_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="cancel"
+                android:textStyle="italic"
+                android:gravity="center"
+                android:textSize="20sp"
+
+                android:textColor="@color/white"
+                android:layout_weight="1"/>
+<!--            分割线-->
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#9f9393"/>
+
+            <TextView
+                android:id="@+id/prompt_right_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Sure"
+                android:textStyle="italic"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 
 </LinearLayout>

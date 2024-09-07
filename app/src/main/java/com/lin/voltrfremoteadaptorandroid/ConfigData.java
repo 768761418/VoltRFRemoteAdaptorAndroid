@@ -9,4 +9,10 @@ public class ConfigData {
     public final static int TYPE_BLE = 0;
     public final static int TYPE_ZONE = 1;
 
+
+    public final static int DIALOG_PROMPT_TITLE = 100;
+    public final static int DIALOG_PROMPT_TEXT = 101;
+    public final static int DIALOG_PROMPT_LEFT_BTN = 102;
+    public final static int DIALOG_PROMPT_RIGHT_BTN = 103;
+
 }
