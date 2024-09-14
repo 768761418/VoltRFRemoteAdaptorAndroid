@@ -35,4 +35,7 @@
     <color name="remote_divider">#979797</color>
 
     <color name="dialog_show_bg">#C83c3f41</color>
+
+
+    <color name="common_color">#ffdc74</color>
 </resources>

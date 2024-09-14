@@ -1,6 +1,7 @@
 package com.lin.voltrfremoteadaptorandroid.Activity.homeFgm.zone;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.lin.voltrfremoteadaptorandroid.Adapter.common.CommonAdapter;
 import com.lin.voltrfremoteadaptorandroid.Adapter.common.CommonViewHolder;
@@ -18,6 +20,9 @@ import com.lin.voltrfremoteadaptorandroid.MyApplication;
 import com.lin.voltrfremoteadaptorandroid.R;
 import com.lin.voltrfremoteadaptorandroid.databinding.FragmentZoneBinding;
 import com.lin.voltrfremoteadaptorandroid.db.ZoneDb;
+import com.lin.voltrfremoteadaptorandroid.view.InputDialog;
+import com.lin.voltrfremoteadaptorandroid.view.PromptDialog;
+
 import java.util.List;
 
 /**
@@ -39,10 +44,16 @@ public class ZoneFragment extends Fragment {
     private List<ZoneDb> zoneDbs;
     private String TAG = "ZoneFragment";
 
+    private boolean isDelete = false;
+
     public ZoneFragment() {
         // Required empty public constructor
     }
 
+    public void setDeleteStatus(boolean isDelete){
+        this.isDelete = isDelete;
+        zoneDbCommonAdapter.notifyDataSetChanged();
+    }
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -94,22 +105,45 @@ public class ZoneFragment extends Fragment {
                 holder.setText(R.id.zone_item_name, data.getZoneName());
                 holder.setViewImageRes(R.id.zone_item_logo,R.drawable.icon_zone_item);
 
-                holder.setCommonClickListener(new CommonViewHolder.OnCommonItemEventListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        Intent intent = new Intent(getContext(), ZoneDetailActivity.class);
-                        intent.putExtra("zoneName",data.getZoneName());
-                        intent.putExtra("zoneId",data.getId());
-                        startActivityForResult(intent, ConfigData.DEFAULT_REQUEST_CODE);
-                    }
+                if (isDelete){
+//                    删除模式
+                    holder.getView(R.id.zone_item_delete).setVisibility(View.VISIBLE);
+                    holder.setViewImageRes(R.id.zone_item_delete,R.drawable.icon_zone_delete);
 
-                    @Override
-                    public void onItemLongClick(int viewId, int position) {
+                    //                设置删除点击事件
+                    holder.setCommonClickListener(new CommonViewHolder.OnCommonItemEventListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            deleteZone(data);
+                        }
 
-                    }
-                });
+                        @Override
+                        public void onItemLongClick(int viewId, int position) {
+
+                        }
+                    });
 
 
+                }else {
+//                    正常模式
+                    holder.getView(R.id.zone_item_delete).setVisibility(View.GONE);
+                    //                设置基础点击和长按事件
+                    holder.setCommonClickListener(new CommonViewHolder.OnCommonItemEventListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            Intent intent = new Intent(getContext(), ZoneDetailActivity.class);
+                            intent.putExtra("zoneName",data.getZoneName());
+                            intent.putExtra("zoneId",data.getId());
+                            startActivityForResult(intent, ConfigData.DEFAULT_REQUEST_CODE);
+                        }
+
+                        @Override
+                        public void onItemLongClick(int viewId, int position) {
+                            changeZoneName(data);
+                        }
+                    });
+
+                }
 
             }
         };
@@ -133,24 +167,62 @@ public class ZoneFragment extends Fragment {
 
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == ConfigData.UPDATE_RESULT_CODE){
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    zoneDbs.clear();
-                    initData();
-                    zoneDbCommonAdapter.notifyDataSetChanged();  // 通知数据更新
+//    修改zone的名字
+    private void changeZoneName(ZoneDb data){
+        InputDialog inputDialog = new InputDialog(
+                getContext(),
+                getString(R.string.title_for_change_zone_name),
+                getString(R.string.text_for_change_zone_name),
+                data.getZoneName()
+        );
+//                        设置save点击事件
+        inputDialog.setRightClickCallback(new InputDialog.RightClickCallback() {
+            @Override
+            public void onRightClickCallback(String editMessage) {
+                if (editMessage!= null && !editMessage.equals("")){
+//                                    列表数据要改
+                    data.setZoneName(editMessage);
+//                                    数据库要改
+                    ZoneDb zoneDb = ZoneDb.findZoneById(data.getId());
+                    zoneDb.setZoneName(editMessage);
+                    zoneDb.save();
+//                                    刷新列表显示
+                    zoneDbCommonAdapter.notifyDataSetChanged();
+                }else {
+                    Toast.makeText(getContext(), "Please enter the correct cell",Toast.LENGTH_SHORT).show();
                 }
-            });
 
-//            zoneDbs.clear();
-//
-//            zoneDbCommonAdapter.notifyDataSetChanged();
-//            zoneDbCommonAdapter.notifyItemRangeChanged(0, zoneDbs.size());
+            }
+        });
 
-        }
+        inputDialog.show();
     }
+
+    private void deleteZone(ZoneDb data){
+        PromptDialog promptDialog = new PromptDialog(getContext(),
+                "警告",
+                "you really want to delete this Zone?",
+                "cancel",
+                "delete");
+        promptDialog.setColor(ConfigData.DIALOG_PROMPT_TITLE, Color.RED);
+        promptDialog.setColor(ConfigData.DIALOG_PROMPT_TEXT,Color.RED);
+        promptDialog.setColor(ConfigData.DIALOG_PROMPT_RIGHT_BTN,Color.RED);
+
+//        点击删除之后的反馈
+        promptDialog.setRightClickCallback(new PromptDialog.RightClickCallback() {
+            @Override
+            public void onRightClickCallback() {
+//                列表中删除
+                zoneDbs.remove(data);
+//                数据库中删除(还要删除关系表)
+                ZoneDb.deleteZoneById(data.getId());
+//                刷新列表显示
+                zoneDbCommonAdapter.notifyDataSetChanged();
+            }
+        });
+
+        promptDialog.show();
+    }
+
+
 }

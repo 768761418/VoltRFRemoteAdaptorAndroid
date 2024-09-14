@@ -8,6 +8,7 @@
     <string name="title_network">Network</string>
     <string name="title_zone">Zone</string>
     <string name="title_setting">Settings</string>
+    <string name="title_add_member">Add Member</string>
 
     <string name="Luminance">Luminance</string>
     <string name="Zone">Zone</string>
@@ -36,5 +37,10 @@
     <string name="remote_smooth">SMOOTH</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="title_for_change_zone_name">Edit Title</string>
+    <string name="text_for_change_zone_name">Change the title of the cell</string>
+
+    <string name="ble_connect_message">"Bluetooth connect success"</string>
 
 </resources>

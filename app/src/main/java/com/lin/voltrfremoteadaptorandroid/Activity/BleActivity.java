@@ -1,6 +1,7 @@
 package com.lin.voltrfremoteadaptorandroid.Activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -8,11 +9,13 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.hjq.permissions.Permission;
 import com.hjq.permissions.XXPermissions;
 import com.lin.voltrfremoteadaptorandroid.Adapter.common.CommonAdapter;
 import com.lin.voltrfremoteadaptorandroid.Adapter.common.CommonViewHolder;
+import com.lin.voltrfremoteadaptorandroid.ConfigData;
 import com.lin.voltrfremoteadaptorandroid.R;
 import com.lin.voltrfremoteadaptorandroid.databinding.LayoutBleBinding;
 import com.lin.voltrfremoteadaptorandroid.db.BleDb;
@@ -151,9 +154,12 @@ public class BleActivity extends BaseActivity{
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(BleActivity.this,"Bluetooth connect",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(BleActivity.this,getString(R.string.ble_connect_message),Toast.LENGTH_SHORT).show();
                         loadingDialog.dismiss();
-                        finish();
+//                        发送广播，通知ble界面更新数据
+                        Intent intent = new Intent(ConfigData.BROADCAST_BLE_UPDATE);
+                        LocalBroadcastManager.getInstance(BleActivity.this).sendBroadcast(intent);
+//                        finish();
                     }
                 });
 

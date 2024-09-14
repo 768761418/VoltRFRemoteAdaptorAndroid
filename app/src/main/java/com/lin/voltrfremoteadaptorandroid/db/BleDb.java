@@ -26,6 +26,22 @@ public class BleDb extends SugarRecord {
         this.majorClassName = majorClassName;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public String getMajorClassName() {
+        return majorClassName;
+    }
+
     // 获取所有数据
     public static List<BleDb> getAllBle() {
         return BleDb.listAll(BleDb.class);

@@ -1,7 +1,9 @@
 package com.lin.voltrfremoteadaptorandroid.Activity.homeFgm.zone;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -14,10 +16,12 @@ import com.lin.voltrfremoteadaptorandroid.MyApplication;
 import com.lin.voltrfremoteadaptorandroid.R;
 import com.lin.voltrfremoteadaptorandroid.databinding.LayoutZoneDetailsBinding;
 import com.lin.voltrfremoteadaptorandroid.db.ZoneDb;
+import com.lin.voltrfremoteadaptorandroid.view.PromptDialog;
 
 public class ZoneDetailActivity extends BaseActivity {
     private LayoutZoneDetailsBinding layoutZoneDetailsBinding;
     private long zoneId;
+    private final String TAG = "ZoneDetailActivity";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,12 +52,7 @@ public class ZoneDetailActivity extends BaseActivity {
             }
         });
 
-        layoutZoneDetailsBinding.zoneDetailsDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteZone();
-            }
-        });
+
 
     }
 
@@ -61,14 +60,12 @@ public class ZoneDetailActivity extends BaseActivity {
 
 
     private void addMember(){
-
+        Intent intent = new Intent(ZoneDetailActivity.this,AddMemberActivity.class);
+        intent.putExtra("zoneId",zoneId);
+        startActivity(intent);
     }
 
-    private void deleteZone(){
-        ZoneDb.deleteZoneById(zoneId);
-        setResult(ConfigData.UPDATE_RESULT_CODE);
-        finish();
-    }
+
 
     private void setColor(){
         Intent intent = new Intent(ZoneDetailActivity.this, RgbCwControlActivity.class);

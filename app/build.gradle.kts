@@ -30,6 +30,15 @@ android {
     }
 }
 
+configurations.all {
+    resolutionStrategy.eachDependency {
+        if (requested.group == "org.jetbrains.kotlin") {
+            useVersion("1.8.0") // 统一指定Kotlin版本
+        }
+    }
+}
+
+
 dependencies {
 
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -49,6 +58,6 @@ dependencies {
     implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.23")
 
 
-//    implementation ("no.nordicsemi.android:mesh:3.3.4")
+    implementation ("no.nordicsemi.android:mesh:3.3.4")
 
 }

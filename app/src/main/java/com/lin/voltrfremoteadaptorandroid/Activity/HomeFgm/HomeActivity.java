@@ -29,7 +29,9 @@ public class HomeActivity extends BaseActivity {
     private LayoutHomeBinding layoutHomeBinding;
     private List<Fragment> fragments = new ArrayList<>();
     private List<String> tabLayoutData = new ArrayList<>();
+    private boolean isZoneDelete  = false;
 
+    private ZoneFragment zoneFragment;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,9 +50,11 @@ public class HomeActivity extends BaseActivity {
         layoutHomeBinding.topBar.initTopBar(getString(R.string.title_network));
         layoutHomeBinding.topBar.setIconRightImg(R.drawable.icon_add);
 
+        zoneFragment = ZoneFragment.newInstance("Zone","1");
+
 //        初始化tab layout
         fragments.add(NetworkFragment.newInstance("network","0"));
-        fragments.add(ZoneFragment.newInstance("Zone","1"));
+        fragments.add(zoneFragment);
         fragments.add(SettingFragment.newInstance("Setting","2"));
 //        设置适配器
         FgmAdapter fgmAdapter = new FgmAdapter(getSupportFragmentManager(),getLifecycle(),fragments);
@@ -87,7 +91,23 @@ public class HomeActivity extends BaseActivity {
 
                 }else if (position == 1){
                     layoutHomeBinding.topBar.initTopBar(getString(R.string.title_zone));
-                    layoutHomeBinding.topBar.hideIconRightImg();
+                    layoutHomeBinding.topBar.setIconRightImg(R.drawable.icon_delete);
+                    layoutHomeBinding.topBar.iconRightImg().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (isZoneDelete){
+                            //删除状态下的切换操作
+                                isZoneDelete =false;
+                                layoutHomeBinding.topBar.setIconRightImg(R.drawable.icon_delete);
+                                zoneFragment.setDeleteStatus(isZoneDelete);
+                            }else {
+                                isZoneDelete = true;
+                                layoutHomeBinding.topBar.setIconRightImg(R.drawable.icon_finish);
+                                zoneFragment.setDeleteStatus(isZoneDelete);
+                            }
+                        }
+                    });
+
                 } else if (position == 2) {
                     layoutHomeBinding.topBar.initTopBar(getString(R.string.title_setting));
                     layoutHomeBinding.topBar.hideIconRightImg();

@@ -13,6 +13,11 @@ import com.vise.baseble.ViseBle;
 
 import java.util.List;
 
+import no.nordicsemi.android.mesh.MeshManagerApi;
+import no.nordicsemi.android.mesh.MeshManagerCallbacks;
+import no.nordicsemi.android.mesh.MeshNetwork;
+import no.nordicsemi.android.mesh.provisionerstates.UnprovisionedMeshNode;
+
 
 /**
  * 应用入口
@@ -86,6 +91,55 @@ public class MyApplication extends android.app.Application {
         Log.d(TAG, "initBle: 初始化蓝牙成功");
     }
 
+    private void initMesh(){
+        MeshManagerApi mMeshManagerApi = new MeshManagerApi(mApplication);
+//        mMeshManagerApi.setMeshManagerCallbacks(new MeshManagerCallbacks() {
+//            @Override
+//            public void onNetworkLoaded(MeshNetwork meshNetwork) {
+//
+//            }
+//
+//            @Override
+//            public void onNetworkUpdated(MeshNetwork meshNetwork) {
+//
+//            }
+//
+//            @Override
+//            public void onNetworkLoadFailed(String error) {
+//
+//            }
+//
+//            @Override
+//            public void onNetworkImported(MeshNetwork meshNetwork) {
+//
+//            }
+//
+//            @Override
+//            public void onNetworkImportFailed(String error) {
+//
+//            }
+//
+//            @Override
+//            public void sendProvisioningPdu(UnprovisionedMeshNode meshNode, byte[] pdu) {
+//
+//            }
+//
+//            @Override
+//            public void onMeshPduCreated(byte[] pdu) {
+//
+//            }
+//
+//            @Override
+//            public int getMtu() {
+//                return 0;
+//            }
+//        });
+//        mMeshManagerApi.setProvisioningStatusCallbacks(this);
+//        mMeshManagerApi.setMeshStatusCallbacks(this);
+        mMeshManagerApi.loadMeshNetwork();
+//        mMeshManagerApi.ide
+
+    }
 
 
 

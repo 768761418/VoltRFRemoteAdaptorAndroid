@@ -43,9 +43,17 @@ public class PromptDialog {
     public PromptDialog(Context context, String title, String text,String leftBtnText,String rightBtnText) {
         dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(false); // Set this to false if you don't want to allow cancellation
+        dialog.setCancelable(true); // Set this to false if you don't want to allow cancellation
         init( title, text,leftBtnText,rightBtnText);
     }
+
+    public PromptDialog(Context context, String title, String text) {
+        dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true); // Set this to false if you don't want to allow cancellation
+        init( title, text,null,null);
+    }
+
 //    初始化
     private void init( String title, String text,String leftBtnText,String rightBtnText){
         view = LayoutInflater.from(dialog.getContext()).inflate(R.layout.dialog_prompt, null);
@@ -57,8 +65,13 @@ public class PromptDialog {
 //        设置文字
         titleView.setText(title);
         textView.setText(text);
-        leftBtnView.setText(leftBtnText);
-        rightBtnView.setText(rightBtnText);
+
+        if (leftBtnText != null){
+            leftBtnView.setText(leftBtnText);
+        }
+        if (rightBtnText != null){
+            rightBtnView.setText(rightBtnText);
+        }
 
 //        交给其他Activity去定义点击事件
         leftBtnView.setOnClickListener(new View.OnClickListener() {

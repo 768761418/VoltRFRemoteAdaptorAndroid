@@ -68,7 +68,7 @@
 
         <activity android:name=".Activity.BleActivity" android:exported="true" android:attributionTags="蓝牙链接界面"/>
         <activity android:name=".Activity.homeFgm.zone.ZoneDetailActivity" android:exported="true" android:attributionTags="zone选择页"/>
-
+        <activity android:name=".Activity.homeFgm.zone.AddMemberActivity" android:exported="true" android:attributionTags="添加组设备的页面"/>
 <!--        修改颜色界面的注册-->
         <activity android:name=".Activity.colorControl.RgbCwControlActivity" android:exported="true" android:attributionTags="修改颜色的部分"/>
         <activity android:name=".Activity.colorControl.RemoteActivity" android:exported="true" android:attributionTags="遥控器"/>

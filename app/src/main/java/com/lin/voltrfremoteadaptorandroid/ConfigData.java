@@ -15,4 +15,7 @@ public class ConfigData {
     public final static int DIALOG_PROMPT_LEFT_BTN = 102;
     public final static int DIALOG_PROMPT_RIGHT_BTN = 103;
 
+
+    public final static String BROADCAST_BLE_UPDATE= "com.lin.ACTION_UPDATE_BLE";
+
 }
